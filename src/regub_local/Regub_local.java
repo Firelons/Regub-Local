@@ -16,9 +16,9 @@ public class Regub_local extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        //BDD
+        //BDD : 172.16.0.50 - user root - mdp jtankhull
         
-        Video video = new Video(stage);
+        Player video = new Player(stage);
         video.play("test.mp4");
     }
 
