@@ -12,13 +12,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +35,7 @@ public class ContratController {
     static final String PASS = "jtankhull";
 
     public static void main(String[] args) {
-        ArrayList<ContratModel> tcm_local;
+        ArrayList<ContratModel> tcm_local = new ArrayList();
         FileInputStream fis;
         try {
             fis = new FileInputStream("contrats");
@@ -63,8 +62,10 @@ public class ContratController {
             ResultSet rs = stmt.executeQuery(sql);
 
             ArrayList<ContratModel> tcm_remote = new ArrayList();
-
+            boolean existe;
+            Download dl = new Download();
             while (rs.next()) {
+                existe = false;
                 ContratModel cm = new ContratModel();
                 cm.idVideo = rs.getInt("idVideo");
                 cm.frequence = rs.getInt("frequence");
@@ -72,8 +73,27 @@ public class ContratController {
                 cm.dateDebut = rs.getDate("dateDebut");
                 cm.dateFin = rs.getDate("dateFin");
                 tcm_remote.add(cm);
+
+                Iterator<ContratModel> it = tcm_local.iterator();
+                while (it.hasNext() && !(existe)) {
+                    ContratModel cm_local = it.next();
+                    if (cm_local.idVideo == cm.idVideo) {
+                        tcm_local.remove(cm_local);
+                        existe = true;
+                    }
+                }
+                if (!(existe)) {
+                    System.out.println("TELECHARGEMENT:" + cm.idVideo);
+                    dl.getFile(Integer.toString(cm.idVideo));
+                }
             }
             rs.close();
+
+            Iterator<ContratModel> it = tcm_local.iterator();
+            while (it.hasNext()) {
+                ContratModel cm_local = it.next();
+                System.out.println("FICHIER RESTANT:" + cm_local.idVideo);
+            }
 
             try {
                 FileOutputStream fos = new FileOutputStream("contrats");
@@ -108,6 +128,5 @@ public class ContratController {
             }//end finally try
         }//end try
         System.out.println("Goodbye!");
-
     }
 }

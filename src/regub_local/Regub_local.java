@@ -17,6 +17,11 @@ public class Regub_local extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         //BDD : 172.16.0.50 - user root - mdp jtankhull
+        //Serialize serialize = new Serialize("contrats");
+        //serialize.read();
+        //ContratController cc = new ContratController("Poissonerie");
+        //serialize.write(cc.getList());
+        //serialize.compare(cc.getList());
         
         Player video = new Player(stage);
         video.play("test.mp4");
