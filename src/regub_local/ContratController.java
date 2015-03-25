@@ -58,7 +58,7 @@ public class ContratController {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement();
 
-            String sql = "SELECT * FROM Video INNER JOIN DiffusionsTypesRayons INNER JOIN TypeRayon WHERE TypeRayon.libelle = 'Poissonerie'";
+            String sql = "SELECT * FROM Video INNER JOIN DiffusionsTypesRayons ON DiffusionsTypesRayons.idVideo=Video.idVideo INNER JOIN TypeRayon ON DiffusionsTypesRayons.idTypeRayon = TypeRayon.idTypeRayon WHERE TypeRayon.libelle = 'Charcuterie';";
             ResultSet rs = stmt.executeQuery(sql);
 
             ArrayList<ContratModel> tcm_remote = new ArrayList();
