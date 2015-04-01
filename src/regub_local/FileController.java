@@ -17,8 +17,8 @@ import static regub_local.ContratController.DB_URL;
 
 public class FileController {
 
-    private String IP = "http://172.16.0.50/";
-    private String PATH = "VIDEOS/";
+    private String IP;
+    private String PATH;
 
     FileController(String path) {
         this.PATH = path;
@@ -47,9 +47,10 @@ public class FileController {
         Iterator<ContratModel> it = contrat.iterator();
         while (it.hasNext()) {
             ContratModel cm_local = it.next();
-            File file = new File("VIDEOS/" + cm_local.idVideo + ".mp4");
+            String path = PATH + cm_local.idVideo + ".mp4";
+            File file = new File(path);
             file.delete();
-            System.out.println("!SUPPRIMER:" + cm_local.idVideo + ".MP4");
+            System.out.println("!SUPPRIMER:" + path);
         }
     }
 
@@ -64,7 +65,7 @@ public class FileController {
             }
             fis.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Contrat local non existant...");
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -87,9 +88,5 @@ public class FileController {
             Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-    }
-    
-    public void setPath(String path) {
-        this.PATH = path;
     }
 }

@@ -52,7 +52,6 @@ public class ContratController {
                 cm.dateDebut = rs.getDate("dateDebut");
                 cm.dateFin = rs.getDate("dateFin");
                 contrat_remote.add(cm);
-                System.out.println("TEST:"+cm.idVideo);
             }
             rs.close();
         } catch (SQLException se) {
@@ -77,7 +76,7 @@ public class ContratController {
                 se.printStackTrace();
             }//end finally try
         }//end try
-        System.out.println("TEST 1 2 3");
+        
         return contrat_remote;
     }
 }
