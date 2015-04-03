@@ -27,6 +27,10 @@ public class Player {
         this.stage = stage;
     }
     
+    public void chargerPlaylist(Playlist p) {
+        
+    }
+    
     public void play(String path) {
         final File f = new File(path);
 
