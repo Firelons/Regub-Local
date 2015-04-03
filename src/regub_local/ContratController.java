@@ -12,12 +12,11 @@ import java.util.ArrayList;
  * @author vinc
  */
 public class ContratController {
-
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://172.16.0.50:3306/regie_video";
-
-    static final String USER = "jdbcUser";
-    static final String PASS = "jtankhull";
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_URL = "jdbc:mysql://172.16.0.50:3306/regie_video";
+    private static final String USER = "jdbcUser";
+    private static final String PASS = "jtankhull";
+    
     private static ContratController INSTANCE;
 
     private ContratController() {
@@ -30,13 +29,13 @@ public class ContratController {
         return INSTANCE;
     }
 
-    public ArrayList<ContratModel> getContrat(String rayon) {
+    public ArrayList<Contrat> getContrats(String rayon) {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
-        ArrayList<ContratModel> contrat_remote = new ArrayList();
+        ArrayList<Contrat> contrat_remote = new ArrayList();
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             String sql = "SELECT * FROM Video INNER JOIN DiffusionsTypesRayons ON DiffusionsTypesRayons.idVideo=Video.idVideo INNER JOIN TypeRayon ON DiffusionsTypesRayons.idTypeRayon = TypeRayon.idTypeRayon WHERE TypeRayon.libelle = ?";
@@ -45,7 +44,7 @@ public class ContratController {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                ContratModel cm = new ContratModel();
+                Contrat cm = new Contrat();
                 cm.idVideo = rs.getInt("idVideo");
                 cm.frequence = rs.getInt("frequence");
                 cm.duree = rs.getInt("duree");
@@ -54,12 +53,7 @@ public class ContratController {
                 contrat_remote.add(cm);
             }
             rs.close();
-        } catch (SQLException se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
+        } catch (SQLException | ClassNotFoundException se) {
         } finally {
             //finally block used to close resources
             try {
@@ -73,7 +67,6 @@ public class ContratController {
                     conn.close();
                 }
             } catch (SQLException se) {
-                se.printStackTrace();
             }//end finally try
         }//end try
         

@@ -4,16 +4,10 @@ import java.io.*;
 import java.net.*;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static regub_local.ContratController.DB_URL;
 
 public class FileController {
 
@@ -43,10 +37,10 @@ public class FileController {
         }
     }
 
-    public void delete(ArrayList<ContratModel> contrat) {
-        Iterator<ContratModel> it = contrat.iterator();
+    public void delete(ArrayList<Contrat> contrat) {
+        Iterator<Contrat> it = contrat.iterator();
         while (it.hasNext()) {
-            ContratModel cm_local = it.next();
+            Contrat cm_local = it.next();
             String path = PATH + cm_local.idVideo + ".mp4";
             File file = new File(path);
             file.delete();
@@ -54,13 +48,13 @@ public class FileController {
         }
     }
 
-    public ArrayList<ContratModel> serLoad(String name) {
-        ArrayList<ContratModel> tcm = new ArrayList();
+    public ArrayList<Contrat> serLoad(String name) {
+        ArrayList<Contrat> tcm = new ArrayList();
         FileInputStream fis;
         try {
             fis = new FileInputStream(PATH + name);
             try (ObjectInputStream in = new ObjectInputStream(fis)) {
-                tcm = (ArrayList<ContratModel>) in.readObject();
+                tcm = (ArrayList<Contrat>) in.readObject();
                 in.close();
             }
             fis.close();
@@ -72,7 +66,7 @@ public class FileController {
         return tcm;
     }
 
-    public boolean serSave(String name, ArrayList<ContratModel> tcm) {
+    public boolean serSave(String name, ArrayList<Contrat> tcm) {
         try {
             FileOutputStream fos;
             fos = new FileOutputStream(name); //name='contrats'

@@ -24,21 +24,21 @@ public class Regub_local extends Application {
         Property properties = new Property();
         
         FileController fc_root = new FileController("");
-        ArrayList<ContratModel> contrat_local = fc_root.serLoad("contrats");
+        ArrayList<Contrat> contrat_local = fc_root.serLoad("contrats");
 
         ContratController cc = ContratController.getInstance();
-        ArrayList<ContratModel> contrat_remote = cc.getContrat(properties.getProp("rayon"));
+        ArrayList<Contrat> contrat_remote = cc.getContrats(properties.getProp("rayon"));
         
         FileController fc_video = new FileController("VIDEOS/", "http://172.16.0.50/");
         
         boolean existe; int cpt = 0;
-        Iterator<ContratModel> it1 = contrat_remote.iterator();
+        Iterator<Contrat> it1 = contrat_remote.iterator();
         while (it1.hasNext()) {
-            ContratModel cm_remote = it1.next();
+            Contrat cm_remote = it1.next();
             existe = false;
-            Iterator<ContratModel> it2 = contrat_local.iterator();
+            Iterator<Contrat> it2 = contrat_local.iterator();
             while (it2.hasNext() && !(existe)) {
-                ContratModel cm_local = it2.next();
+                Contrat cm_local = it2.next();
                 if (cm_remote.idVideo == cm_local.idVideo) {
                     existe = true;
                     contrat_local.remove(cm_local);

@@ -11,7 +11,7 @@ import java.sql.Date;
  *
  * @author vinc
  */
-public class ContratModel implements java.io.Serializable {
+public class Contrat implements java.io.Serializable {
 
     int idVideo;
     String titre;
