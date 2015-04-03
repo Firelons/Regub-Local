@@ -6,64 +6,97 @@
 package regub_local;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  *
  * @author vinc
  */
 public class Playlist {
-    public static void main(String[] args) {
-        String heure = "8.5-18.5";
-        String horaire[] = heure.split("-");
-        float ouverture = Float.parseFloat(horaire[0]);
-        float fermeture = Float.parseFloat(horaire[1]);
-        int temps_total = (int) (fermeture - ouverture) * 3600;
-        
-        System.out.println("Ouverture:" + ouverture);
-        System.out.println("Fermeture:" + fermeture);
-        System.out.println("Temps total:" + temps_total);
-        
-        ArrayList<ContratModel> contrat_local = new ArrayList();
-        ContratModel cm1 = new ContratModel();
-        cm1.idVideo = 1; cm1.frequence = 10;
-        ContratModel cm2 = new ContratModel();
-        cm2.idVideo = 1; cm2.frequence = 7;
-        ContratModel cm3 = new ContratModel();
-        cm3.idVideo = 1; cm3.frequence = 4;
-        ContratModel cm4 = new ContratModel();
-        cm4.idVideo = 1; cm4.frequence = 2;
-        ContratModel cm5 = new ContratModel();
-        cm5.idVideo = 1; cm5.frequence = 1;
-        
-        contrat_local.add(cm1);
-        contrat_local.add(cm2);
-        contrat_local.add(cm3);
-        contrat_local.add(cm4);
-        contrat_local.add(cm5);
-        
-        int totalFreq = 0;
-        for (ContratModel c : contrat_local) {
-            totalFreq+=c.frequence;
-        }
-        int espacementDif = (int) (temps_total / (totalFreq + 1));
-        System.out.println("Espacement diff:"+espacementDif);
-        
-        HashMap<Integer,Boolean> tab1 = new HashMap<>();
-        HashMap<Integer,Integer> tab2 = new HashMap<>();
-        for (int i = 1; i <= totalFreq; i++) {
-            tab1.put(i * espacementDif, Boolean.FALSE);
-            tab2.put(i * espacementDif, 0);
-        }
-        
-        int espacementVideo;
-        for (ContratModel c : contrat_local) {
-            espacementVideo = temps_total/(c.frequence+1);
-            int heureIdeale;
-            for (int i=1; i<=c.frequence; i++) {
-                heureIdeale = i*espacementVideo;
-                
+	
+	private int jour;
+	private float heureOuverture;
+	private float heureFermeture;
+	private TreeMap<Integer, Integer> planification;
+	
+	public Playlist(ArrayList<ContratModel> liste_contrats) {
+            creerPlanification(liste_contrats);
+	}
+	
+	private void creerPlanification(ArrayList<ContratModel> liste_contrats) {
+            int temps_total = this.getTempsTotal();
+            int somme_frequence = 0;
+            for (ContratModel contrat : liste_contrats) {
+                somme_frequence += contrat.frequence;
             }
-        }
-    }
+            int temps_entre_diffusions = (int) (temps_total / (somme_frequence + 1));
+            ArrayList<Integer> tableau_temps_diffusions = new ArrayList<>();
+            for (int i=1; i<=somme_frequence; i++) {
+                tableau_temps_diffusions.add(i * temps_entre_diffusions);
+                this.planification.put(i * temps_entre_diffusions, -1);
+            }
+            int espacement_contrat;
+            for (ContratModel contrat : liste_contrats) {
+                espacement_contrat = temps_total / (contrat.frequence+1);
+                int temps_ideal;
+                int temps_retenu;
+                for (int i=1; i<=contrat.frequence; i++) {
+                    temps_ideal = i*espacement_contrat;
+                    temps_retenu = rechercheDichotomique(tableau_temps_diffusions, temps_ideal);
+                    this.planification.put(temps_retenu, contrat.idVideo);
+                    tableau_temps_diffusions.remove(temps_retenu);
+                }
+            }
+	}
+        
+        int rechercheDichotomique(ArrayList<Integer> tab, int val) {
+            boolean trouve;
+            int debut, fin, milieu;
+
+            trouve = false;
+            debut = 0;
+            fin = tab.size();
+
+            while (!trouve && ((fin - debut) > 1)) {
+                milieu = (debut+fin)/2;
+                trouve = (tab.get(milieu) == val);
+                if (tab.get(milieu) > val) fin = milieu;
+                else debut = milieu;
+            }
+
+            if (debut<tab.size()-1) {
+                if ((tab.get(debut+1) - val) < val - tab.get(debut)) {
+                        return tab.get(debut+1);
+                }
+            }
+            return tab.get(debut);
+	}
+	
+	public void setHeureOuverture(float heureOuverture) {
+		this.heureOuverture = heureOuverture;
+	}
+	
+	public float getHeureOuverture() {
+		return this.heureOuverture;
+	}
+	
+	public void setHeureFermeture(float heureFermeture) {
+		this.heureFermeture = heureFermeture;
+	}
+	
+	public float getHeureFermeture() {
+		return this.heureFermeture;
+	}
+	
+	public int getTempsTotal() {
+		return (int) (this.heureFermeture - this.heureOuverture) * 3600;
+	}
+	
+	public void setJour(int jour) {
+		this.jour = jour;
+	}
+	
+	public int getJour() {
+		return this.jour;
+	}	
 }
