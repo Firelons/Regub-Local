@@ -19,9 +19,11 @@ public class Regub_local extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        
+        
         System.out.println();  System.out.println("|||||||| DEBUGGER ||||||||||");
         
-        Property properties = new Property();
+        /*Property properties = new Property();
         
         FileController fc_root = new FileController("");
         ArrayList<Contrat> contrat_local = fc_root.serLoad("contrats");
@@ -54,13 +56,15 @@ public class Regub_local extends Application {
         if (cpt > 0) {
             fc_video.delete(contrat_local);
             fc_root.serSave("contrats", contrat_remote);
-        }
-
-        System.out.println("Jour actuel:"+properties.getDay());
+        }*/
         
         
-        //Player video = new Player(stage);
-        //video.play("test.mp4");
+        //Playlist p = new Playlist(8, 18, contrat_local);
+        Player video = new Player(stage);
+        video.setPlayerWait("videowait.mp4");
+        video.add("1.mp4");
+        video.add("4.mp4");
+        video.play(0);
         System.out.println("|||||||| END ||||||||||");
     }
 

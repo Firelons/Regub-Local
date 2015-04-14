@@ -6,6 +6,8 @@
 package regub_local;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.Scene;
@@ -15,6 +17,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -22,23 +25,43 @@ import javafx.stage.Stage;
  */
 public class Player {
     private Stage stage;
+    List<MediaPlayer> players = new ArrayList<>();
+    List<MediaPlayer> players_wait = new ArrayList<>();
+    int position = 0;
+    MediaView mv = new MediaView();
     
     public Player(Stage stage) {
         this.stage = stage;
+        
     }
     
     public void chargerPlaylist(Playlist p) {
         
     }
     
-    public void play(String path) {
-        final File f = new File(path);
-
-        final Media m = new Media(f.toURI().toString());
-        final MediaPlayer mp = new MediaPlayer(m);
+    public void add(String path) {
+        final File f = new File("VIDEOS/"+path);
+        final Media media = new Media(f.toURI().toString());
+        final MediaPlayer player = new MediaPlayer(media);
+        player.setOnEndOfMedia(new Runnable() {
+        @Override public void run() {
+            players_wait.get(0).play();
+            player.stop();
+            mv.setMediaPlayer(players_wait.get(0));
+                try{
+                Thread.sleep(30000);
+                }catch(InterruptedException e){}
+            position++;
+            mv.setMediaPlayer(players.get(position));
+            players.get(position).play();
+        }});
+        players.add(player);
+    }
+    
+    public void play(int position) {
+        this.position = position;
+        mv.setMediaPlayer(players.get(position));
         
-        final MediaView mv = new MediaView(mp);
-
         final DoubleProperty width = mv.fitWidthProperty();
         final DoubleProperty height = mv.fitHeightProperty();
         
@@ -55,9 +78,17 @@ public class Player {
 
         stage.setScene(scene);
         stage.setTitle("Full Screen Video Player");
-        stage.setFullScreen(true);
+        //stage.setFullScreen(true);
         stage.show();
 
-        mp.play();
+        players.get(position).play();
     }
+    
+    public void setPlayerWait(String path) {
+        final File f = new File("VIDEOS/"+path);
+        final Media media = new Media(f.toURI().toString());
+        final MediaPlayer player = new MediaPlayer(media);
+        players_wait.add(player);
+    }
+    
 }

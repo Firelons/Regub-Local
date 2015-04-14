@@ -20,24 +20,31 @@ public class Playlist {
     private int duree_entre_videos;
     private int[] ordre_diffusion;
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
+        Contrat c0 = new Contrat();
         Contrat c1 = new Contrat();
         Contrat c2 = new Contrat();
         Contrat c3 = new Contrat();
+        Contrat c4 = new Contrat();
+        Contrat c5 = new Contrat();
         
+        c0.frequence = 10; c0.idVideo = 0;
         c1.frequence = 4; c1.idVideo = 1;
+        c4.frequence = 3; c4.idVideo = 4;
         c2.frequence = 2; c2.idVideo = 2;
+        c5.frequence = 2; c5.idVideo = 5;
         c3.frequence = 1; c3.idVideo = 3;
         
         ArrayList<Contrat> tab = new ArrayList<>();
-        tab.add(c1); tab.add(c2); tab.add(c3);
+        tab.add(c0);
+        tab.add(c1);tab.add(c4); tab.add(c2); tab.add(c5); tab.add(c3);  
         
         Playlist p = new Playlist(8, 18, tab);
         
         System.out.println("Heure début diffusion : " + p.heure_debut_diffusion);
         System.out.println("Durée diffusion : " + p.duree_diffusion);
         System.out.println("Durée entre videos : " + p.duree_entre_videos);
-        for (int i=0; i<=6; i++) {
+        for (int i=0; i<22; i++) {
             System.out.println(p.getOrdreDiffusion()[i]);
         }
     }
