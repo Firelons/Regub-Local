@@ -17,21 +17,18 @@ import javafx.stage.Stage;
  */
 public class Regub extends Application {
     
-    static Stage stage_access;
-    static Scene scene_access;
+    static Stage stage;
+    static Scene scene_principale;
     
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Regub.scene_principale = new Scene(root);
         
-        stage_access = stage;
-        Scene scene = new Scene(root);
-        scene_access = scene;
-        stage.setScene(scene);
-        /*stage.setFullScreenExitHint("");
-        stage.setFullScreen(true);*/
-        
-        stage.show();
+        Regub.stage = stage;
+        Regub.stage.setScene(scene_principale);
+        Regub.stage.setFullScreenExitHint("");
+        Regub.stage.show();
     }
 
     /**

@@ -27,13 +27,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 /**
@@ -63,10 +61,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ListView<String> liste;
     
-    @FXML
-    private Pane pane;
-    
-    private StackPane spane;
+    private StackPane sp;
 
     Playlist p;
     Stage primaryStage = new Stage();
@@ -74,34 +69,13 @@ public class FXMLDocumentController implements Initializable {
     int position = 0;
     int _width = 300;
     int _height = 300;
-    Scene scene1;
-
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    Scene scene_plein_ecran;
     
-    @FXML
-    private void handleButtonEscape(KeyEvent event) {
-        System.out.println("KEYEVENT");
-        if (event.getCode() == KeyCode.ESCAPE) {
-            System.out.println("ESCAPE");
-            Regub.stage_access.setScene(Regub.scene_access);
-            /*x.setValue(0);
-            y.setValue(0);*/
-        }
-    }
 
     @FXML
     private void handleButtonPleinEcranAction(ActionEvent event) throws InterruptedException {
-        /*primaryStage.setFullScreen(true);
-         primaryStage.requestFocus();*/
-        //Regub.stage_access.setScene(scene);
-        /*bp.getChildren().remove(0);
-        bp.getChildren().remove(1);
-        System.out.println("PLEIN ECRAN");
-        pane.getChildren().add(mv);
+        sp.getChildren().add(mv);
+        Regub.stage.setScene(scene_plein_ecran);
         
         final DoubleProperty width = mv.fitWidthProperty();
         final DoubleProperty height = mv.fitHeightProperty();
@@ -109,9 +83,7 @@ public class FXMLDocumentController implements Initializable {
         width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
         height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
 
-        Regub.stage_access.setFullScreen(true);*/
-        spane.getChildren().add(mv);
-        Regub.stage_access.setScene(scene1);
+        Regub.stage.setFullScreen(true);
     }
 
     private void remplirListe() {
@@ -125,10 +97,9 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //final MediaView mv1 = new MediaView();
-
         //récupération de la playlist du jour
         p = PlaylistController.getInstance().getPlaylist();
+        mv.setPreserveRatio(false);
 
         //création de la liste de mediaplayer
         listeMediaPlayer = new HashMap<>();
@@ -138,13 +109,11 @@ public class FXMLDocumentController implements Initializable {
             mp.setOnEndOfMedia(new Runnable() {
                 @Override
                 public void run() {
-                    // actions here e.g.:
                     MediaPlayer mp = listeMediaPlayer.get("pause");
                     mp.seek(Duration.ZERO);
-                    //mv1.setMediaPlayer(mp);
                     mv.setMediaPlayer(mp);
                     mp.play();
-                    Regub.stage_access.setScene(Regub.scene_access);
+                    Regub.stage.setScene(Regub.scene_principale);
                     bp.setCenter(mv);
                 }
             });
@@ -160,7 +129,6 @@ public class FXMLDocumentController implements Initializable {
 
         //lancer la playlist
         MediaPlayer premierMediaPlayer = listeMediaPlayer.get("pause");
-        //mv1.setMediaPlayer(premierMediaPlayer);
         mv.setMediaPlayer(premierMediaPlayer);
         premierMediaPlayer.play();
 
@@ -176,31 +144,30 @@ public class FXMLDocumentController implements Initializable {
                     timer.cancel();
                 }
                 premierMediaPlayer.seek(Duration.ZERO);
-                //mv1.setMediaPlayer(premierMediaPlayer);
                 mv.setMediaPlayer(premierMediaPlayer);
                 premierMediaPlayer.play();
 
             }
         }, p.getDureeEntreVideos() * 1000, p.getDureeEntreVideos() * 1000);
-        mv.setOpacity(0.5);
-        mv.setPreserveRatio(false);
-        /*final DoubleProperty width = mv.fitWidthProperty();
-         final DoubleProperty height = mv.fitHeightProperty();
-         // final DoubleProperty height = mv.fitHeightProperty();
 
-         width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
-         height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
-
-         mv.setPreserveRatio(false);
-        */
-         spane = new StackPane();
-         //root.getChildren().add(mv);
-
-        scene1 = new Scene(spane);
-              
-         /*primaryStage.initStyle(StageStyle.UNDECORATED);
-         primaryStage.setScene(scene);
-         primaryStage.setTitle("Full Screen Video Player");
-         primaryStage.show();*/
+        
+        sp = new StackPane();
+        scene_plein_ecran = new Scene(sp);
+        scene_plein_ecran.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+              if (event.getCode() == KeyCode.ESCAPE) {
+                    System.out.println("ESCAPE");
+                    Regub.stage.setScene(Regub.scene_principale);
+                    bp.setCenter(mv);
+                    final DoubleProperty width = mv.fitWidthProperty();
+                    final DoubleProperty height = mv.fitHeightProperty();
+                    width.unbind();
+                    height.unbind();
+                    mv.fitHeightProperty().set(200);
+                    mv.fitWidthProperty().set(400);
+                }
+            }
+          });
     }
 }
