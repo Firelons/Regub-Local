@@ -12,15 +12,18 @@ import java.util.HashMap;
 public class Playlist {
 	
     private ArrayList<Contrat> liste_contrats;
-    private float heure_debut_diffusion;
+    private Calendar heure_debut_diffusion;
+    private Calendar heure_fin_diffusion;
     private int duree_diffusion;
     private int duree_entre_videos;
     private int[] ordre_diffusion;
     
-    public Playlist(float heure_debut_diffusion, float heure_fin_diffusion, ArrayList<Contrat> liste_contrats) {
+    public Playlist(Calendar heure_debut_diffusion, Calendar heure_fin_diffusion, ArrayList<Contrat> liste_contrats) {
         this.liste_contrats = liste_contrats;
         setHeureDebutDiffusion(heure_debut_diffusion);
-        setDureeDiffusion((int) ((heure_fin_diffusion - heure_debut_diffusion) * 3600));
+        setHeureFinDiffusion(heure_fin_diffusion);
+        setDureeDiffusion((int) (heure_fin_diffusion.getTimeInMillis() - heure_debut_diffusion.getTimeInMillis()) / 1000);
+        
         creerPlanification(liste_contrats);
     }
 
@@ -33,6 +36,8 @@ public class Playlist {
         this.ordre_diffusion = new int[somme_frequence];
         int temps_entre_videos = (int) (temps_total / (somme_frequence + 1));
         setDureeEntreVideos(temps_entre_videos);
+        System.out.println("durée diffusion : " + this.getDureeDiffusion());
+        System.out.println("durée entre vidéo : " + this.getDureeEntreVideos());
         HashMap<Integer, Integer> tableau_temps_diffusions_index = new HashMap<>();
         ArrayList<Integer> tableau_temps_diffusions = new ArrayList<>();
         for (int i=1; i<=somme_frequence; i++) {
@@ -76,12 +81,20 @@ public class Playlist {
         return tab.get(debut);
     }
 
-    private void setHeureDebutDiffusion(float heure_debut_diffusion) {
+    private void setHeureDebutDiffusion(Calendar heure_debut_diffusion) {
         this.heure_debut_diffusion = heure_debut_diffusion;
     }
 
-    public float getHeureDebutDiffusion() {
+    public Calendar getHeureDebutDiffusion() {
         return this.heure_debut_diffusion;
+    }
+    
+    private void setHeureFinDiffusion(Calendar heure_fin_diffusion) {
+        this.heure_fin_diffusion = heure_fin_diffusion;
+    }
+
+    public Calendar getHeureFinDiffusion() {
+        return this.heure_fin_diffusion;
     }
 
     private void setDureeDiffusion(int duree_diffusion) {

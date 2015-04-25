@@ -1,7 +1,11 @@
 
 package regub;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,7 +41,13 @@ public class PlaylistController {
         tab.add(c5);
         tab.add(c1);tab.add(c4); tab.add(c2); tab.add(c0); tab.add(c3);  
         
-        Playlist p = new Playlist(8, (float) 8.2, tab);
+        Calendar[] horaires = null;
+        try {
+            horaires = Configuration.getInstance().getHours(Calendar.SUNDAY);
+        } catch (IOException ex) {
+            Logger.getLogger(PlaylistController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Playlist p = new Playlist(horaires[0], horaires[1], tab);
         
         return p;
     }

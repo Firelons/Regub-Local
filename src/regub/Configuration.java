@@ -74,9 +74,10 @@ public class Configuration {
         fermeture = filtre[1].split("h");
         heures[0] = Calendar.getInstance();
         heures[1] = Calendar.getInstance();
-        heures[0].set(Calendar.HOUR, Integer.parseInt(ouverture[0]));
+        heures[1] = Calendar.getInstance();
+        heures[0].set(Calendar.HOUR_OF_DAY, Integer.parseInt(ouverture[0]));
         heures[0].set(Calendar.MINUTE, Integer.parseInt(ouverture[1]));
-        heures[1].set(Calendar.HOUR, Integer.parseInt(fermeture[0]));
+        heures[1].set(Calendar.HOUR_OF_DAY, Integer.parseInt(fermeture[0]));
         heures[1].set(Calendar.MINUTE, Integer.parseInt(fermeture[1]));
         
         return heures;
@@ -91,9 +92,9 @@ public class Configuration {
             Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Calendar[] heures = c.getHours(Calendar.MONDAY);
-        System.out.println("Heure d'ouverture : " + heures[0].get(Calendar.HOUR) + "h" + heures[0].get(Calendar.MINUTE));
-        System.out.println("Heure de fermeture : " + heures[1].get(Calendar.HOUR) + "h" + heures[1].get(Calendar.MINUTE));
+        Calendar[] heures = c.getHours(Calendar.TUESDAY);
+        System.out.println("Heure d'ouverture : " + heures[0].get(Calendar.HOUR_OF_DAY) + "h" + heures[0].get(Calendar.MINUTE));
+        System.out.println("Heure de fermeture : " + heures[1].get(Calendar.HOUR_OF_DAY) + "h" + heures[1].get(Calendar.MINUTE));
         
     }
 }

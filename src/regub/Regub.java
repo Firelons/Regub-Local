@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -28,6 +29,8 @@ public class Regub extends Application {
         Regub.stage = stage;
         Regub.stage.setScene(scene_principale);
         Regub.stage.setFullScreenExitHint("");
+        Regub.stage.setResizable(false);
+        Regub.stage.initStyle(StageStyle.UTILITY);
         Regub.stage.show();
     }
 

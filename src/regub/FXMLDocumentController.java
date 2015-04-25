@@ -6,8 +6,12 @@
 package regub;
 
 import java.io.File;
+import static java.lang.Math.round;
 import java.net.URL;
+import java.text.DateFormatSymbols;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,6 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
+import static javafx.scene.input.KeyCode.R;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -44,7 +49,10 @@ public class FXMLDocumentController implements Initializable {
     private BorderPane bp;
 
     @FXML
-    private Label label;
+    private Label lTimer;
+    
+    @FXML
+    private Label lHoraires;
 
     @FXML
     private AnchorPane anchor;
@@ -71,26 +79,45 @@ public class FXMLDocumentController implements Initializable {
     int _height = 300;
     Scene scene_plein_ecran;
     
-
-    @FXML
-    private void handleButtonPleinEcranAction(ActionEvent event) throws InterruptedException {
-        sp.getChildren().add(mv);
-        Regub.stage.setScene(scene_plein_ecran);
-        
+    void activerModePleinEcran() {
         final DoubleProperty width = mv.fitWidthProperty();
         final DoubleProperty height = mv.fitHeightProperty();
-
         width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
         height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
 
+        sp.getChildren().add(mv);
+        Regub.stage.setScene(scene_plein_ecran);
         Regub.stage.setFullScreen(true);
+    }
+    
+    void desactiverModePleinEcran() {
+        final DoubleProperty width = mv.fitWidthProperty();
+        final DoubleProperty height = mv.fitHeightProperty();
+        width.unbind();
+        height.unbind();
+        mv.fitHeightProperty().set(200);
+        mv.fitWidthProperty().set(400);
+        
+        bp.setCenter(mv);
+        Regub.stage.setScene(Regub.scene_principale);
+        Regub.stage.setFullScreen(false);  
+    }
+    
+    @FXML
+    private void handleButtonPleinEcranAction(ActionEvent event) throws InterruptedException {
+        activerModePleinEcran();
     }
 
     private void remplirListe() {
         ObservableList<String> items = FXCollections.observableArrayList();
+        int dev = p.getDureeEntreVideos();
+        Calendar heures = Calendar.getInstance();
+        heures.set(Calendar.HOUR, round(dev));
+        heures.set(Calendar.MINUTE, dev-round(dev));
+        
         for (int i = 0; i < p.getOrdreDiffusion().length; i++) {
             Contrat c = p.getContrat(p.getOrdreDiffusion()[i]);
-            items.add("#" + Integer.toString(i + 1) + " | id : " + c.getIdVideo() + " | titre : " + c.getTitre());
+            items.add(heures.get(Calendar.HOUR)+":"+heures.get(Calendar.MINUTE) + "#" + Integer.toString(i + 1) + " | id : " + c.getIdVideo() + " | titre : " + c.getTitre());
         }
         liste.setItems(items);
     }
@@ -99,6 +126,16 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //récupération de la playlist du jour
         p = PlaylistController.getInstance().getPlaylist();
+        String[] days = new DateFormatSymbols(Locale.getDefault()).getWeekdays();
+        StringBuilder sb = new StringBuilder();
+        sb.append(days[Calendar.getInstance().get(Calendar.DAY_OF_WEEK)].toUpperCase()).append(" : ");
+        sb.append("( ").append(String.format("%02d", p.getHeureDebutDiffusion().get(Calendar.HOUR_OF_DAY))).append("h");
+        sb.append(String.format("%02d", p.getHeureDebutDiffusion().get(Calendar.MINUTE))).append(" - ");
+        sb.append(String.format("%02d", p.getHeureFinDiffusion().get(Calendar.HOUR_OF_DAY))).append("h");
+        sb.append(String.format("%02d", p.getHeureFinDiffusion().get(Calendar.MINUTE))).append(" )");
+        
+        lHoraires.setText(sb.toString());
+        
         mv.setPreserveRatio(false);
 
         //création de la liste de mediaplayer
@@ -113,8 +150,6 @@ public class FXMLDocumentController implements Initializable {
                     mp.seek(Duration.ZERO);
                     mv.setMediaPlayer(mp);
                     mp.play();
-                    Regub.stage.setScene(Regub.scene_principale);
-                    bp.setCenter(mv);
                 }
             });
             listeMediaPlayer.put(Integer.toString(c.getIdVideo()), mp);
@@ -139,6 +174,7 @@ public class FXMLDocumentController implements Initializable {
                 listeMediaPlayer.get("pause").stop();
                 listeMediaPlayer.get("pause").seek(Duration.ZERO);
                 MediaPlayer premierMediaPlayer = listeMediaPlayer.get(Integer.toString(p.getOrdreDiffusion()[position]));
+
                 position++;
                 if (position >= p.getOrdreDiffusion().length) {
                     timer.cancel();
@@ -156,16 +192,8 @@ public class FXMLDocumentController implements Initializable {
         scene_plein_ecran.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-              if (event.getCode() == KeyCode.ESCAPE) {
-                    System.out.println("ESCAPE");
-                    Regub.stage.setScene(Regub.scene_principale);
-                    bp.setCenter(mv);
-                    final DoubleProperty width = mv.fitWidthProperty();
-                    final DoubleProperty height = mv.fitHeightProperty();
-                    width.unbind();
-                    height.unbind();
-                    mv.fitHeightProperty().set(200);
-                    mv.fitWidthProperty().set(400);
+                if (event.getCode() == KeyCode.ESCAPE) {
+                    desactiverModePleinEcran();
                 }
             }
           });
