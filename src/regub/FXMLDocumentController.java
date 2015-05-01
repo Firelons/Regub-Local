@@ -6,15 +6,21 @@
 package regub;
 
 import java.io.File;
-import static java.lang.Math.round;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.text.DateFormatSymbols;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
@@ -28,7 +34,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
-import static javafx.scene.input.KeyCode.R;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -69,8 +74,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ListView<String> liste;
     
+    private ArrayList<Contrat> contrats_a_diffuser;
+    
     private StackPane sp;
 
+    
     Playlist p;
     Stage primaryStage = new Stage();
     HashMap<String, MediaPlayer> listeMediaPlayer;
@@ -110,29 +118,73 @@ public class FXMLDocumentController implements Initializable {
 
     private void remplirListe() {
         ObservableList<String> items = FXCollections.observableArrayList();
-        int dev = p.getDureeEntreVideos();
-        Calendar heures = Calendar.getInstance();
-        heures.set(Calendar.HOUR, round(dev));
-        heures.set(Calendar.MINUTE, dev-round(dev));
         
-        for (int i = 0; i < p.getOrdreDiffusion().length; i++) {
-            Contrat c = p.getContrat(p.getOrdreDiffusion()[i]);
-            items.add(heures.get(Calendar.HOUR)+":"+heures.get(Calendar.MINUTE) + "#" + Integer.toString(i + 1) + " | id : " + c.getIdVideo() + " | titre : " + c.getTitre());
+        StringBuilder sb;
+       
+        for (Diffusion d : p.getListeDiffusion()) {
+            sb = new StringBuilder();
+            sb.append("(");
+            sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.HOUR_OF_DAY)));
+            sb.append(":");
+            sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.MINUTE)));
+            sb.append(":");
+            sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.SECOND)));
+            sb.append(") ");
+            sb.append(d.getContrat().getTitre());
+            items.add(sb.toString());
         }
         liste.setItems(items);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //SI DATE ACTUELLE > DATE DE FERMETURE DE LA JOURNEE : AFFICHER MESSAGE ERREUR ET QUITTER APPLI
+        /* if... */
+        
+        /* TRUC SUR A 100 % */
+            //horaires du jour
+            Calendar[] horaires = null;
+            try {
+               horaires = Configuration.getInstance().getHours(Calendar.DAY_OF_WEEK); 
+            } catch (IOException ex) {
+               Logger.getLogger(PlaylistController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String[] days = new DateFormatSymbols(Locale.getDefault()).getWeekdays();
+            StringBuilder sb = new StringBuilder();
+            
+            sb.append(days[Calendar.getInstance().get(Calendar.DAY_OF_WEEK)].toUpperCase()).append(" : (");
+            sb.append(String.format("%02d", horaires[0].get(Calendar.HOUR_OF_DAY))).append("h");
+            sb.append(String.format("%02d", horaires[0].get(Calendar.MINUTE))).append(" - ");
+            sb.append(String.format("%02d", horaires[1].get(Calendar.HOUR_OF_DAY))).append("h");
+            sb.append(String.format("%02d", horaires[1].get(Calendar.MINUTE))).append(")");
+        
+            lHoraires.setText(sb.toString());
+        /* */
+        
+        contrats_a_diffuser = new ArrayList();
+        FileInputStream fis;
+        try {
+            fis = new FileInputStream("contrats");
+            try (ObjectInputStream in = new ObjectInputStream(fis)) {
+                contrats_a_diffuser = (ArrayList<Contrat>) in.readObject();
+                in.close();
+            }
+            fis.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println("Contrat local non existant...");
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       
+
+        try {
+            p = new Playlist(Calendar.getInstance(), horaires[1], contrats_a_diffuser);
+        } catch (RegubException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         //récupération de la playlist du jour
-        p = PlaylistController.getInstance().getPlaylist();
-        String[] days = new DateFormatSymbols(Locale.getDefault()).getWeekdays();
-        StringBuilder sb = new StringBuilder();
-        sb.append(days[Calendar.getInstance().get(Calendar.DAY_OF_WEEK)].toUpperCase()).append(" : ");
-        sb.append("( ").append(String.format("%02d", p.getHeureDebutDiffusion().get(Calendar.HOUR_OF_DAY))).append("h");
-        sb.append(String.format("%02d", p.getHeureDebutDiffusion().get(Calendar.MINUTE))).append(" - ");
-        sb.append(String.format("%02d", p.getHeureFinDiffusion().get(Calendar.HOUR_OF_DAY))).append("h");
-        sb.append(String.format("%02d", p.getHeureFinDiffusion().get(Calendar.MINUTE))).append(" )");
         
         lHoraires.setText(sb.toString());
         
@@ -167,24 +219,37 @@ public class FXMLDocumentController implements Initializable {
         mv.setMediaPlayer(premierMediaPlayer);
         premierMediaPlayer.play();
 
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                listeMediaPlayer.get("pause").stop();
-                listeMediaPlayer.get("pause").seek(Duration.ZERO);
-                MediaPlayer premierMediaPlayer = listeMediaPlayer.get(Integer.toString(p.getOrdreDiffusion()[position]));
+      
+                
+                
+        
+        
+        
+        ArrayList<Timer> toto = new ArrayList<Timer>();
+        
+        for (Diffusion d : p.getListeDiffusion()) {
+            toto.add(new Timer());
+        }
+        
+        int o=0;
+        for (Diffusion d : p.getListeDiffusion()) {
+            
+            toto.get(o).schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    listeMediaPlayer.get("pause").stop();
+                    listeMediaPlayer.get("pause").seek(Duration.ZERO);
+                    MediaPlayer premierMediaPlayer = listeMediaPlayer.get(Integer.toString(p.getOrdreDiffusion()[position]));
 
-                position++;
-                if (position >= p.getOrdreDiffusion().length) {
-                    timer.cancel();
+                    position++;
+                    premierMediaPlayer.seek(Duration.ZERO);
+                    mv.setMediaPlayer(premierMediaPlayer);
+                    premierMediaPlayer.play();
+
                 }
-                premierMediaPlayer.seek(Duration.ZERO);
-                mv.setMediaPlayer(premierMediaPlayer);
-                premierMediaPlayer.play();
-
-            }
-        }, p.getDureeEntreVideos() * 1000, p.getDureeEntreVideos() * 1000);
+            }, d.getHeureDiffusion().getTime());
+            o++;
+        }
 
         
         sp = new StackPane();

@@ -77,8 +77,10 @@ public class Configuration {
         heures[1] = Calendar.getInstance();
         heures[0].set(Calendar.HOUR_OF_DAY, Integer.parseInt(ouverture[0]));
         heures[0].set(Calendar.MINUTE, Integer.parseInt(ouverture[1]));
+        heures[0].set(Calendar.SECOND, 0);
         heures[1].set(Calendar.HOUR_OF_DAY, Integer.parseInt(fermeture[0]));
         heures[1].set(Calendar.MINUTE, Integer.parseInt(fermeture[1]));
+        heures[1].set(Calendar.SECOND, 0);
         
         return heures;
     }
