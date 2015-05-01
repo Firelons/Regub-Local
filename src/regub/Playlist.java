@@ -15,14 +15,14 @@ public class Playlist {
     private Calendar debut_diffusion;
     private Calendar fin_diffusion;
     private int[] ordre_diffusion;
-    private ArrayList<Diffusion> liste_diffusion;
+    private ArrayList<Diffusion> liste_diffusions;
     
     public Playlist(Calendar debut_diffusion, Calendar fin_diffusion, ArrayList<Contrat> liste_contrats) throws RegubException {
         if (debut_diffusion.after(fin_diffusion)) throw new RegubException("Erreur : la date de début de diffusion est supérieur à la date de fin de diffusion");
         this.liste_contrats = liste_contrats;
         this.debut_diffusion = debut_diffusion;
         this.fin_diffusion = fin_diffusion;
-        this.liste_diffusion = new ArrayList<>();
+        this.liste_diffusions = new ArrayList<>();
         
         creerPlanification(liste_contrats);
     }
@@ -45,7 +45,7 @@ public class Playlist {
             int temps_retenu;
             for (int i=1; i<=contrat.getFrequence(); i++) {
                 temps_ideal = i*espacement_contrat;
-                temps_retenu = rechercheDichotomique(tableau_temps_diffusions, temps_ideal);
+                temps_retenu = MathUtil.rechercheDichotomique(tableau_temps_diffusions, temps_ideal);
                 this.ordre_diffusion[tableau_temps_diffusions_index.get(temps_retenu)] = contrat.getIdVideo();
                 tableau_temps_diffusions.remove(tableau_temps_diffusions.indexOf(temps_retenu));
             }
@@ -68,40 +68,17 @@ public class Playlist {
             cal.set(Calendar.MINUTE, this.debut_diffusion.get(Calendar.MINUTE));
             cal.set(Calendar.SECOND, this.debut_diffusion.get(Calendar.SECOND));
             cal.add(Calendar.SECOND, debut);
-            liste_diffusion.add(new Diffusion(cont, cal));
+            liste_diffusions.add(new Diffusion(cont, cal));
             debut = debut + cont.getDuree();
         }
         
         System.out.println("durée entre videos : "+duree_pause);
-        for (Diffusion d : this.liste_diffusion) {
+        for (Diffusion d : this.liste_diffusions) {
             System.out.println(d.getHeureDiffusion().get(Calendar.HOUR_OF_DAY)+":"+
                     d.getHeureDiffusion().get(Calendar.MINUTE)+":"+
                     d.getHeureDiffusion().get(Calendar.SECOND)+ " Contrat n°" + d.getContrat().getIdVideo()+
                     " : " + d.getContrat().getTitre());
         }
-    }
-
-    int rechercheDichotomique(ArrayList<Integer> tab, int val) {
-        boolean trouve;
-        int debut, fin, milieu;
-
-        trouve = false;
-        debut = 0;
-        fin = tab.size();
-
-        while (!trouve && ((fin - debut) > 1)) {
-            milieu = (debut+fin)/2;
-            trouve = (tab.get(milieu) == val);
-            if (tab.get(milieu) > val) fin = milieu;
-            else debut = milieu;
-        }
-
-        if (debut<tab.size()-1) {
-            if ((tab.get(debut+1) - val) < val - tab.get(debut)) {
-                    return tab.get(debut+1);
-            }
-        }
-        return tab.get(debut);
     }
 
     public void setDebutDiffusion(Calendar debut_diffusion) {
@@ -120,12 +97,12 @@ public class Playlist {
         return this.fin_diffusion;
     }
     
-    public void setListeDiffusion(ArrayList<Diffusion> liste_diffusion) {
-        this.liste_diffusion = liste_diffusion;
+    public void setListeDiffusions(ArrayList<Diffusion> liste_diffusion) {
+        this.liste_diffusions = liste_diffusion;
     }
     
-    public ArrayList<Diffusion> getListeDiffusion() {
-        return this.liste_diffusion;
+    public ArrayList<Diffusion> getListeDiffusions() {
+        return this.liste_diffusions;
     }
 
     public int getDureeDiffusion() {

@@ -66,6 +66,8 @@ public class Configuration {
             case Calendar.SUNDAY:
                 chaine = this.getProp("dimanche");
                 break;
+            default:
+                throw new IllegalArgumentException("Ce jour de la semaine n'existe pas.");
         }
         
         System.out.println(chaine);
@@ -94,7 +96,8 @@ public class Configuration {
             Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Calendar[] heures = c.getHours(Calendar.TUESDAY);
+        Calendar[] heures = null;
+        heures = c.getHours(Calendar.TUESDAY);
         System.out.println("Heure d'ouverture : " + heures[0].get(Calendar.HOUR_OF_DAY) + "h" + heures[0].get(Calendar.MINUTE));
         System.out.println("Heure de fermeture : " + heures[1].get(Calendar.HOUR_OF_DAY) + "h" + heures[1].get(Calendar.MINUTE));
         

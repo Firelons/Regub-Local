@@ -6,10 +6,7 @@
 package regub;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
@@ -76,16 +73,14 @@ public class FXMLDocumentController implements Initializable {
     
     private ArrayList<Contrat> contrats_a_diffuser;
     
-    private StackPane sp;
-
-    
-    Playlist p;
-    Stage primaryStage = new Stage();
-    HashMap<String, MediaPlayer> listeMediaPlayer;
-    int position = 0;
-    int _width = 300;
-    int _height = 300;
+    private StackPane stackPane;
     Scene scene_plein_ecran;
+    
+    Playlist playlist;
+    Stage primaryStage = new Stage();
+    HashMap<String, MediaPlayer> listeMediaPlayers;
+    int position = 0;
+    
     
     void activerModePleinEcran() {
         final DoubleProperty width = mv.fitWidthProperty();
@@ -93,7 +88,7 @@ public class FXMLDocumentController implements Initializable {
         width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
         height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
 
-        sp.getChildren().add(mv);
+        stackPane.getChildren().add(mv);
         Regub.stage.setScene(scene_plein_ecran);
         Regub.stage.setFullScreen(true);
     }
@@ -121,7 +116,7 @@ public class FXMLDocumentController implements Initializable {
         
         StringBuilder sb;
        
-        for (Diffusion d : p.getListeDiffusion()) {
+        for (Diffusion d : playlist.getListeDiffusions()) {
             sb = new StringBuilder();
             sb.append("(");
             sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.HOUR_OF_DAY)));
@@ -142,80 +137,83 @@ public class FXMLDocumentController implements Initializable {
         /* if... */
         
         /* TRUC SUR A 100 % */
-            //horaires du jour
-            Calendar[] horaires = null;
-            try {
-               horaires = Configuration.getInstance().getHours(Calendar.DAY_OF_WEEK); 
-            } catch (IOException ex) {
-               Logger.getLogger(PlaylistController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            String[] days = new DateFormatSymbols(Locale.getDefault()).getWeekdays();
-            StringBuilder sb = new StringBuilder();
-            
-            sb.append(days[Calendar.getInstance().get(Calendar.DAY_OF_WEEK)].toUpperCase()).append(" : (");
-            sb.append(String.format("%02d", horaires[0].get(Calendar.HOUR_OF_DAY))).append("h");
-            sb.append(String.format("%02d", horaires[0].get(Calendar.MINUTE))).append(" - ");
-            sb.append(String.format("%02d", horaires[1].get(Calendar.HOUR_OF_DAY))).append("h");
-            sb.append(String.format("%02d", horaires[1].get(Calendar.MINUTE))).append(")");
-        
-            lHoraires.setText(sb.toString());
-        /* */
-        
-        contrats_a_diffuser = new ArrayList();
-        FileInputStream fis;
+        //récupérer horaires prévues
+        Calendar[] horaires = null;
         try {
-            fis = new FileInputStream("contrats");
-            try (ObjectInputStream in = new ObjectInputStream(fis)) {
-                contrats_a_diffuser = (ArrayList<Contrat>) in.readObject();
-                in.close();
-            }
-            fis.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("Contrat local non existant...");
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+           horaires = Configuration.getInstance().getHours(Calendar.DAY_OF_WEEK); 
+        } catch (IOException ex) {
+           Logger.getLogger(PlaylistController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-       
-
+        //créer playlist
         try {
-            p = new Playlist(Calendar.getInstance(), horaires[1], contrats_a_diffuser);
+            playlist = new Playlist(Calendar.getInstance(), horaires[1], ContratController.getInstance().getContratsADiffuser());
         } catch (RegubException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //récupération de la playlist du jour
-        
+        //afficher horaires du jour
+        String[] days = new DateFormatSymbols(Locale.getDefault()).getWeekdays();
+        StringBuilder sb = new StringBuilder();
+        sb.append(days[Calendar.getInstance().get(Calendar.DAY_OF_WEEK)].toUpperCase()).append(" : (");
+        sb.append(String.format("%02d", horaires[0].get(Calendar.HOUR_OF_DAY))).append("h");
+        sb.append(String.format("%02d", horaires[0].get(Calendar.MINUTE))).append(" - ");
+        sb.append(String.format("%02d", horaires[1].get(Calendar.HOUR_OF_DAY))).append("h");
+        sb.append(String.format("%02d", horaires[1].get(Calendar.MINUTE))).append(")");
         lHoraires.setText(sb.toString());
         
+        //quand on est pas en plein écran on ne conserve pas le ratio
         mv.setPreserveRatio(false);
-
+        
+        //remplissage de la listeview
+        remplirListe();
+        
         //création de la liste de mediaplayer
-        listeMediaPlayer = new HashMap<>();
-        for (Contrat c : p.getListeContrats()) {
+        listeMediaPlayers = new HashMap<>();
+        Media media = new Media(new File("videos/pause.mp4").toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        listeMediaPlayers.put("pause", mediaPlayer);
+        for (Contrat c : playlist.getListeContrats()) {
             Media m = new Media(new File("videos/" + c.getIdVideo() + ".mp4").toURI().toString());
             MediaPlayer mp = new MediaPlayer(m);
             mp.setOnEndOfMedia(new Runnable() {
                 @Override
                 public void run() {
-                    MediaPlayer mp = listeMediaPlayer.get("pause");
+                    MediaPlayer mp = listeMediaPlayers.get("pause");
                     mp.seek(Duration.ZERO);
                     mv.setMediaPlayer(mp);
                     mp.play();
                 }
             });
-            listeMediaPlayer.put(Integer.toString(c.getIdVideo()), mp);
+            listeMediaPlayers.put(Integer.toString(c.getIdVideo()), mp);
         }
-        Media m = new Media(new File("videos/pause.mp4").toURI().toString());
-        MediaPlayer mp = new MediaPlayer(m);
-        mp.setCycleCount(MediaPlayer.INDEFINITE);
-        listeMediaPlayer.put("pause", mp);
+        
+        //initialiser la scene de plein ecran
+        stackPane = new StackPane();
+        scene_plein_ecran = new Scene(stackPane);
+        scene_plein_ecran.setOnKeyPressed((KeyEvent event) -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                desactiverModePleinEcran();
+            }
+        });
+        /* */
+        
+            
 
-        //remplissage de la listeview
-        remplirListe();
+        
+        
+        
+        
+        
+
+
+        
+
+        
 
         //lancer la playlist
-        MediaPlayer premierMediaPlayer = listeMediaPlayer.get("pause");
+        MediaPlayer premierMediaPlayer = listeMediaPlayers.get("pause");
         mv.setMediaPlayer(premierMediaPlayer);
         premierMediaPlayer.play();
 
@@ -227,19 +225,19 @@ public class FXMLDocumentController implements Initializable {
         
         ArrayList<Timer> toto = new ArrayList<Timer>();
         
-        for (Diffusion d : p.getListeDiffusion()) {
+        for (Diffusion d : playlist.getListeDiffusions()) {
             toto.add(new Timer());
         }
         
         int o=0;
-        for (Diffusion d : p.getListeDiffusion()) {
+        for (Diffusion d : playlist.getListeDiffusions()) {
             
             toto.get(o).schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    listeMediaPlayer.get("pause").stop();
-                    listeMediaPlayer.get("pause").seek(Duration.ZERO);
-                    MediaPlayer premierMediaPlayer = listeMediaPlayer.get(Integer.toString(p.getOrdreDiffusion()[position]));
+                    listeMediaPlayers.get("pause").stop();
+                    listeMediaPlayers.get("pause").seek(Duration.ZERO);
+                    MediaPlayer premierMediaPlayer = listeMediaPlayers.get(Integer.toString(playlist.getOrdreDiffusion()[position]));
 
                     position++;
                     premierMediaPlayer.seek(Duration.ZERO);
@@ -252,15 +250,7 @@ public class FXMLDocumentController implements Initializable {
         }
 
         
-        sp = new StackPane();
-        scene_plein_ecran = new Scene(sp);
-        scene_plein_ecran.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ESCAPE) {
-                    desactiverModePleinEcran();
-                }
-            }
-          });
+        
+        
     }
 }
