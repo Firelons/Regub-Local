@@ -5,14 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Configuration {
     
     private static Configuration INSTANCE; 
     
     private static final String FICHIER_CONFIGURATION = "config.properties";
+    private static final String REGEX_HORAIRES = "^[0-9]{1,2}h[0-9]{1,2}-[0-9]{1,2}h[0-9]{1,2}$";
+    
     private final Properties properties;
     
     public static Configuration getInstance() throws IOException {
@@ -38,68 +38,43 @@ public class Configuration {
         return properties.getProperty(name);
     }
     
-    public Calendar[] getHours(int jour) {
-        Calendar heures[] = new Calendar[2];
-        String chaine = "";
-        String[] filtre;
-        String[] ouverture;
-        String[] fermeture;
+    public Calendar[] getHoraires(int jour) throws Exception {
+        Calendar horaires[] = new Calendar[2];
+        String st;
+        String[] filtre, ouverture, fermeture;
         switch(jour) {
             case Calendar.MONDAY:
-                chaine = this.getProp("lundi");
-                break;
+                st = this.getProp("lundi"); break;
             case Calendar.TUESDAY:
-                chaine = this.getProp("mardi");
-                break;
+                st = this.getProp("mardi"); break;
             case Calendar.WEDNESDAY:
-                chaine = this.getProp("mercredi");
-                break;
+                st = this.getProp("mercredi"); break;
             case Calendar.THURSDAY:
-                chaine = this.getProp("jeudi");
-                break;
+                st = this.getProp("jeudi"); break;
             case Calendar.FRIDAY:
-                chaine = this.getProp("vendredi");
-                break;
+                st = this.getProp("vendredi"); break;
             case Calendar.SATURDAY:
-                chaine = this.getProp("samedi");
-                break;
+                st = this.getProp("samedi"); break;
             case Calendar.SUNDAY:
-                chaine = this.getProp("dimanche");
-                break;
+                st = this.getProp("dimanche"); break;
             default:
-                throw new IllegalArgumentException("Ce jour de la semaine n'existe pas.");
+                throw new IllegalArgumentException("Jour inconnu.");
         }
         
-        System.out.println(chaine);
-        filtre = chaine.split("-");
+        if (!st.matches(REGEX_HORAIRES)) throw new Exception("Les horaires n'ont pas été configurés correctement.");
+
+        filtre = st.split("-");
         ouverture = filtre[0].split("h");
         fermeture = filtre[1].split("h");
-        heures[0] = Calendar.getInstance();
-        heures[1] = Calendar.getInstance();
-        heures[1] = Calendar.getInstance();
-        heures[0].set(Calendar.HOUR_OF_DAY, Integer.parseInt(ouverture[0]));
-        heures[0].set(Calendar.MINUTE, Integer.parseInt(ouverture[1]));
-        heures[0].set(Calendar.SECOND, 0);
-        heures[1].set(Calendar.HOUR_OF_DAY, Integer.parseInt(fermeture[0]));
-        heures[1].set(Calendar.MINUTE, Integer.parseInt(fermeture[1]));
-        heures[1].set(Calendar.SECOND, 0);
+        horaires[0] = Calendar.getInstance();
+        horaires[1] = Calendar.getInstance();
+        horaires[0].set(Calendar.HOUR_OF_DAY, Integer.parseInt(ouverture[0]));
+        horaires[0].set(Calendar.MINUTE, Integer.parseInt(ouverture[1]));
+        horaires[0].set(Calendar.SECOND, 0);
+        horaires[1].set(Calendar.HOUR_OF_DAY, Integer.parseInt(fermeture[0]));
+        horaires[1].set(Calendar.MINUTE, Integer.parseInt(fermeture[1]));
+        horaires[1].set(Calendar.SECOND, 0);
         
-        return heures;
-    }
-    
-    public static void main(String[] args) {
-        Configuration c = null;
-        
-        try {
-            c = Configuration.getInstance();
-        } catch (IOException ex) {
-            Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        Calendar[] heures = null;
-        heures = c.getHours(Calendar.TUESDAY);
-        System.out.println("Heure d'ouverture : " + heures[0].get(Calendar.HOUR_OF_DAY) + "h" + heures[0].get(Calendar.MINUTE));
-        System.out.println("Heure de fermeture : " + heures[1].get(Calendar.HOUR_OF_DAY) + "h" + heures[1].get(Calendar.MINUTE));
-        
+        return horaires;
     }
 }

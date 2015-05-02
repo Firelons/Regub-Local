@@ -5,20 +5,40 @@ import java.net.*;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FileController {
+public class FichierController {
 
+    private static final String DOSSIER_LOGS_DIFFUSION = "logs_diffusion";
+    
+    public static void loguer_diffusion(Diffusion dif) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        sb.append(DOSSIER_LOGS_DIFFUSION).append("/")
+                .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.DAY_OF_MONTH)))
+                .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.MONTH)))
+                .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.YEAR)))
+                .append(".txt");
+        try (Writer output = new BufferedWriter(new FileWriter(sb.toString(), true))) {
+            sb = new StringBuilder();
+            sb.append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.HOUR_OF_DAY))).append(":")
+                    .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.MINUTE))).append(":")
+                    .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.SECOND))).append(" ")
+                    .append(dif.getContrat().getIdVideo()).append("\n");
+            output.append(sb.toString());
+        }
+    } 
+    
     private String IP;
     private String PATH;
 
-    FileController(String path) {
+    FichierController(String path) {
         this.PATH = path;
     }
 
-    FileController(String path, String ip) {
+    FichierController(String path, String ip) {
         this.PATH = path;
         this.IP = ip;
     }
@@ -31,9 +51,9 @@ public class FileController {
             FileOutputStream fos = new FileOutputStream(PATH + name);
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
         } catch (MalformedURLException ex) {
-            Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FichierController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FichierController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -5,8 +5,14 @@
  */
 package regub;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Writer;
 import java.net.URL;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
@@ -23,7 +29,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -140,17 +145,13 @@ public class FXMLDocumentController implements Initializable {
         //récupérer horaires prévues
         Calendar[] horaires = null;
         try {
-           horaires = Configuration.getInstance().getHours(Calendar.DAY_OF_WEEK); 
-        } catch (IOException ex) {
-           Logger.getLogger(PlaylistController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        //créer playlist
-        try {
-            playlist = new Playlist(Calendar.getInstance(), horaires[1], ContratController.getInstance().getContratsADiffuser());
-        } catch (RegubException ex) {
+           horaires = Configuration.getInstance().getHoraires(Calendar.DAY_OF_WEEK); 
+        } catch (Exception ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        this.contrats_a_diffuser = ContratController.getInstance().getContratsADiffuser();
+        playlist = new Playlist(Calendar.getInstance(), horaires[1], this.contrats_a_diffuser);
         
         //afficher horaires du jour
         String[] days = new DateFormatSymbols(Locale.getDefault()).getWeekdays();
@@ -174,20 +175,31 @@ public class FXMLDocumentController implements Initializable {
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         listeMediaPlayers.put("pause", mediaPlayer);
-        for (Contrat c : playlist.getListeContrats()) {
+        playlist.getListeContrats().stream().forEach((c) -> {
             Media m = new Media(new File("videos/" + c.getIdVideo() + ".mp4").toURI().toString());
             MediaPlayer mp = new MediaPlayer(m);
-            mp.setOnEndOfMedia(new Runnable() {
-                @Override
-                public void run() {
-                    MediaPlayer mp = listeMediaPlayers.get("pause");
-                    mp.seek(Duration.ZERO);
-                    mv.setMediaPlayer(mp);
-                    mp.play();
+            mp.setOnEndOfMedia(() -> {
+                c.setFrequence(c.getFrequence()-1);
+                try {
+                    FileOutputStream fos;
+                    fos = new FileOutputStream("contrats");
+                    try (ObjectOutputStream out = new ObjectOutputStream(fos)) {
+                        out.writeObject(playlist.getListeContrats());
+                        out.close();
+                    }
+                    fos.close();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                MediaPlayer pauseMediaPlayer = listeMediaPlayers.get("pause");
+                pauseMediaPlayer.seek(Duration.ZERO);
+                mv.setMediaPlayer(pauseMediaPlayer);
+                pauseMediaPlayer.play();
             });
             listeMediaPlayers.put(Integer.toString(c.getIdVideo()), mp);
-        }
+        });
         
         //initialiser la scene de plein ecran
         stackPane = new StackPane();
@@ -243,6 +255,11 @@ public class FXMLDocumentController implements Initializable {
                     premierMediaPlayer.seek(Duration.ZERO);
                     mv.setMediaPlayer(premierMediaPlayer);
                     premierMediaPlayer.play();
+                    try {
+                        FichierController.loguer_diffusion(d);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
                 }
             }, d.getHeureDiffusion().getTime());
