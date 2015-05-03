@@ -18,7 +18,7 @@ public class Playlist {
     private ArrayList<Diffusion> liste_diffusions;
     
     public Playlist(Calendar debut_diffusion, Calendar fin_diffusion, ArrayList<Contrat> liste_contrats) {
-        if (debut_diffusion.after(fin_diffusion)) throw new IllegalArgumentException("Erreur : la date de début de diffusion est supérieur à la date de fin de diffusion");
+        if (debut_diffusion.getTime().after(fin_diffusion.getTime())) throw new IllegalArgumentException("Erreur : la date de début de diffusion est supérieur à la date de fin de diffusion");
         this.liste_contrats = liste_contrats;
         this.debut_diffusion = debut_diffusion;
         this.fin_diffusion = fin_diffusion;

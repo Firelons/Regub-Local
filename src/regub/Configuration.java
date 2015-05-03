@@ -42,6 +42,7 @@ public class Configuration {
         Calendar horaires[] = new Calendar[2];
         String st;
         String[] filtre, horaire_ouverture, horaire_fermeture;
+        
         switch(jour) {
             case Calendar.MONDAY:
                 st = this.getProp("lundi"); break;

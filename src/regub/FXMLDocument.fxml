@@ -44,7 +44,15 @@
                </font>
             </Label>
             <Label fx:id="lTimer" prefHeight="37.0" prefWidth="203.0" text="Prochaine vidéo dans :" />
-            <Button fx:id="bPleinEcran" mnemonicParsing="false" onAction="#handleButtonPleinEcranAction" text="Plein écran" />
+            <Button fx:id="bPleinEcran" mnemonicParsing="false" onAction="#handleButtonPleinEcranAction" prefHeight="45.0" prefWidth="74.0" text="Plein écran">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="bQuitter" mnemonicParsing="false" onAction="#handleButtonPleinEcranAction" prefHeight="45.0" prefWidth="74.0" text="Quitter">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
