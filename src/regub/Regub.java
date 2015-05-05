@@ -55,7 +55,7 @@ public class Regub extends Application {
             return;
         }
         
-        /** TEST SI TOUTES LES VIDEOS EXISTENT **/
+        /** TEST SI TOUTES LES VIDEOS DE CONTRATS EXISTENT **/
         for (Contrat contrat : contrats_a_diffuser) {
             File f = new File("videos/"+contrat.getIdVideo()+".mp4");
             if(!f.exists() || f.isDirectory()) {
@@ -71,7 +71,39 @@ public class Regub extends Application {
             return;
         }
         
-        /** GENERATION D'UNE PLAYLIST A PARTIR DE LA LISTE DE CONTRATS, DE L'HEURE ACTUELLE ET DE L'HEURE DE FERMETURE **/
+        /** TANT QU'ON A PAS LE TEMPS DE DIFFUSER TOUTES LES VIDEOS, ON REPORTE CERTAINE DIFFUSION A DEMAIN **/
+        int duree_diffusion = (int)((Regub.horaires[1].getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / 1000);
+        int somme_durees;
+        int somme_frequences;
+        
+        do {
+            somme_durees = 0;
+            somme_frequences = 0;
+            for (Contrat c : contrats_a_diffuser) {
+                somme_durees = somme_durees + (c.getFrequence() * c.getDuree());
+                somme_frequences = somme_frequences + c.getFrequence();
+            }
+            
+            somme_durees = somme_durees + (somme_frequences+1)*Integer.parseInt(Configuration.getInstance().getProp("duree_minimum_pause"));
+            
+            if (somme_durees > duree_diffusion) {
+                Contrat contrat_tard = contrats_a_diffuser.get(0);
+                for (Contrat contrat : contrats_a_diffuser) {
+                    if (contrat.getDateFin().getTime().after(contrat_tard.getDateFin().getTime())) {
+                        contrat_tard = contrat;
+                    }
+                }
+                contrat_tard.setFrequence(contrat_tard.getFrequence()-1);
+                if (contrat_tard.getFrequence() == 0) {
+                    contrats_a_diffuser.remove(contrat_tard);
+                }
+            }
+            
+        } while(somme_durees > duree_diffusion); 
+        
+        
+        /** TENTATIVE DE GENERATION D'UNE PLAYLIST A PARTIR DE LA LISTE DE CONTRATS,
+             * DE L'HEURE ACTUELLE ET DE L'HEURE DE FERMETURE **/
         playlist = new Playlist(Calendar.getInstance(), Regub.horaires[1], contrats_a_diffuser);
         
         
@@ -80,7 +112,6 @@ public class Regub extends Application {
         
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         Regub.scene_principale = new Scene(root);
-
         Regub.stage = stage;
         Regub.stage.setScene(scene_principale);
         Regub.stage.setFullScreenExitHint("");

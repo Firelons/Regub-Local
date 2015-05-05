@@ -38,6 +38,21 @@ public class Configuration {
         return properties.getProperty(name);
     }
     
+    public int getDureeMinimumPause() throws RegubException {
+        
+        int duree_minimum_pause;
+        try {
+            duree_minimum_pause = Integer.parseInt(getProp("duree_minimum_pause"));
+            if (duree_minimum_pause > 0) {
+                return duree_minimum_pause;
+            } else {
+                throw new RegubException("La durée minimale de la pause n'a pas été configuré correctement.");
+            }
+        } catch (NumberFormatException ex) {
+            throw new RegubException("La durée minimale de la pause n'a pas été configuré correctement.");
+        }
+    }
+    
     public Calendar[] getHoraires(int jour) throws Exception {
         Calendar horaires[] = new Calendar[2];
         String st;

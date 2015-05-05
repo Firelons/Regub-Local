@@ -1,21 +1,17 @@
 
 package regub;
 
-import java.sql.Date;
+import java.util.Calendar;
 
 public class Contrat implements java.io.Serializable {
     private int idVideo;
     private String titre;
     private int frequence;
     private int duree;
-    private Date dateDebut;
-    private Date dateFin;   
+    private Calendar dateDebut;
+    private Calendar dateFin;   
     
-    public Contrat() {
-        
-    }
-    
-    public Contrat(int idVideo, String titre, int frequence, int duree, Date dateDebut, Date dateFin) {
+    public Contrat(int idVideo, String titre, int frequence, int duree, Calendar dateDebut, Calendar dateFin) {
         this.idVideo = idVideo;
         this.titre = titre;
         this.frequence = frequence;
@@ -56,19 +52,19 @@ public class Contrat implements java.io.Serializable {
         return this.duree;
     }
     
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
     
-    public Date getDateDebut() {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
     
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(Calendar dateFin) {
         this.dateFin = dateFin;
     }
     
-    public Date getDateFin() {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 }

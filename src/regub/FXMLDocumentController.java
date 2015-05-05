@@ -132,8 +132,6 @@ public class FXMLDocumentController implements Initializable {
         //quand on est pas en plein écran on ne conserve pas le ratio
         mv.setPreserveRatio(false);
         
-        
-        
         //création de la liste de mediaplayer
         listeMediaPlayers = new HashMap<>();
         Media media = new Media(new File("videos/pause.mp4").toURI().toString());
@@ -182,26 +180,22 @@ public class FXMLDocumentController implements Initializable {
                 
         for (Diffusion d : Regub.playlist.getListeDiffusions()) {
             sb = new StringBuilder();
-            sb.append("(");
-            sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.HOUR_OF_DAY)));
-            sb.append(":");
-            sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.MINUTE)));
-            sb.append(":");
-            sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.SECOND)));
-            sb.append(") ");
+            sb.append("(").append(String.format("%02d", d.getHeureDiffusion().get(Calendar.HOUR_OF_DAY))).append(":");
+            sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.MINUTE))).append(":");
+            sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.SECOND))).append(") ");
             sb.append(d.getContrat().getTitre());
             Label label = new Label(sb.toString());
             items.add(label);
+            
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     listeMediaPlayers.get("pause").stop();
-                    listeMediaPlayers.get("pause").seek(Duration.ZERO);
                     
-                    MediaPlayer mp = listeMediaPlayers.get(Integer.toString(d.getContrat().getIdVideo()));
-                    mp.seek(Duration.ZERO);
-                    mp.setOnEndOfMedia(() -> {
+                    MediaPlayer mediaPlayer = listeMediaPlayers.get(Integer.toString(d.getContrat().getIdVideo()));
+                    mediaPlayer.seek(Duration.ZERO);
+                    mediaPlayer.setOnEndOfMedia(() -> {
                         try {
                             FichierController.loguer_diffusion(d);
                         } catch (IOException ex) {
@@ -227,8 +221,8 @@ public class FXMLDocumentController implements Initializable {
                         mv.setMediaPlayer(pauseMediaPlayer);
                         pauseMediaPlayer.play();
                     });
-                    mv.setMediaPlayer(mp);
-                    mp.play();
+                    mv.setMediaPlayer(mediaPlayer);
+                    mediaPlayer.play();
                     
                     
 

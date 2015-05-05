@@ -47,8 +47,8 @@ public class ContratController {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                Contrat cm = new Contrat(rs.getInt("idVideo"), rs.getString("titre"), rs.getInt("frequence"), 
-                        rs.getInt("duree"), rs.getDate("dateDebut"), rs.getDate("dateFin"));
+                /*Contrat cm = new Contrat(rs.getInt("idVideo"), rs.getString("titre"), rs.getInt("frequence"), 
+                        rs.getInt("duree"), rs.getDate("dateDebut"), rs.getDate("dateFin"));*/
             }
             rs.close();
         } catch (SQLException | ClassNotFoundException se) {
