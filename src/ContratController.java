@@ -1,17 +1,10 @@
-package regub;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -32,7 +25,7 @@ public class ContratController {
         return INSTANCE;
     }
 
-    public ArrayList<Contrat> getContrats(String rayon) {
+    public ArrayList<Contrat> telechargerContrats(String rayon) {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         ArrayList<Contrat> contrat_remote = new ArrayList();
@@ -69,23 +62,5 @@ public class ContratController {
         }//end try
         
         return contrat_remote;
-    }
-    
-    public ArrayList<Contrat> getContratsADiffuser() {
-        ArrayList<Contrat> contrats_a_diffuser = new ArrayList();
-        FileInputStream fis;
-        try {
-            fis = new FileInputStream("contrats");
-            try (ObjectInputStream in = new ObjectInputStream(fis)) {
-                contrats_a_diffuser = (ArrayList<Contrat>) in.readObject();
-                in.close();
-            }
-            fis.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("Contrat local non existant...");
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return contrats_a_diffuser;
     }
 }

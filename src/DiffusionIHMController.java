@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package regub;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,7 +6,6 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.text.DateFormatSymbols;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -26,42 +19,30 @@ import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-/**
- *
- * @author paul
- */
-public class FXMLDocumentController implements Initializable {
+public class DiffusionIHMController implements Initializable {
 
     @FXML
     private BorderPane bp;
-
-    @FXML
-    private Label lTimer;
     
     @FXML
     private Label lHoraires;
-
-    @FXML
-    private AnchorPane anchor;
 
     @FXML
     private Button bPleinEcran;
@@ -74,19 +55,13 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private ListView<Label> liste;
-    
-    
-    
+        
+    private Scene scene_plein_ecran;
     private StackPane stackPane;
-    Scene scene_plein_ecran;
     
-    
-    Stage primaryStage = new Stage();
     HashMap<String, MediaPlayer> listeMediaPlayers;
-    int position = 0;
     
-    
-    void activerModePleinEcran() {
+    public void activerModePleinEcran() {
         final DoubleProperty width = mv.fitWidthProperty();
         final DoubleProperty height = mv.fitHeightProperty();
         width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
@@ -97,7 +72,7 @@ public class FXMLDocumentController implements Initializable {
         Regub.stage.setFullScreen(true);
     }
     
-    void desactiverModePleinEcran() {
+    public void desactiverModePleinEcran() {
         final DoubleProperty width = mv.fitWidthProperty();
         final DoubleProperty height = mv.fitHeightProperty();
         width.unbind();
@@ -111,11 +86,15 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    private void handleButtonPleinEcranAction(ActionEvent event) throws InterruptedException {
+    private void handleButtonPleinEcranAction(ActionEvent event) {
         activerModePleinEcran();
     }
-
     
+    @FXML
+    private void handleButtonQuitterAction(ActionEvent event) {
+        Runtime.getRuntime().halt(0);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -128,9 +107,6 @@ public class FXMLDocumentController implements Initializable {
         sb.append(String.format("%02d", Regub.horaires[1].get(Calendar.HOUR_OF_DAY))).append("h");
         sb.append(String.format("%02d", Regub.horaires[1].get(Calendar.MINUTE))).append(")");
         lHoraires.setText(sb.toString());
-        
-        //quand on est pas en plein écran on ne conserve pas le ratio
-        mv.setPreserveRatio(false);
         
         //création de la liste de mediaplayer
         listeMediaPlayers = new HashMap<>();
@@ -152,30 +128,7 @@ public class FXMLDocumentController implements Initializable {
                 desactiverModePleinEcran();
             }
         });
-        /* */
         
-            
-
-        
-        
-        
-        
-        
-
-
-        
-
-        
-
-        
-
-      
-                
-                
-        
-        
-        
-       
         ObservableList<Label> items = FXCollections.observableArrayList();
                 
         for (Diffusion d : Regub.playlist.getListeDiffusions()) {
@@ -192,28 +145,19 @@ public class FXMLDocumentController implements Initializable {
                 @Override
                 public void run() {
                     listeMediaPlayers.get("pause").stop();
-                    
                     MediaPlayer mediaPlayer = listeMediaPlayers.get(Integer.toString(d.getContrat().getIdVideo()));
                     mediaPlayer.seek(Duration.ZERO);
                     mediaPlayer.setOnEndOfMedia(() -> {
                         try {
                             FichierController.loguer_diffusion(d);
                         } catch (IOException ex) {
-                            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(DiffusionIHMController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         d.getContrat().setFrequence(d.getContrat().getFrequence()-1);
                         try {
-                            FileOutputStream fos;
-                            fos = new FileOutputStream("contrats");
-                            try (ObjectOutputStream out = new ObjectOutputStream(fos)) {
-                                out.writeObject(Regub.playlist.getListeContrats());
-                                out.close();
-                            }
-                            fos.close();
-                        } catch (FileNotFoundException ex) {
-                            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+                            FichierController.getInstance().sauverContratsADiffuser(Regub.playlist.getListeContrats());
                         } catch (IOException ex) {
-                            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(DiffusionIHMController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         label.setText(label.getText() + " : Diffusée ");
                         MediaPlayer pauseMediaPlayer = listeMediaPlayers.get("pause");
@@ -223,9 +167,6 @@ public class FXMLDocumentController implements Initializable {
                     });
                     mv.setMediaPlayer(mediaPlayer);
                     mediaPlayer.play();
-                    
-                    
-
                 }
             }, d.getHeureDiffusion().getTime());
         }
@@ -233,5 +174,9 @@ public class FXMLDocumentController implements Initializable {
         liste.setItems(items);
         mv.setMediaPlayer(listeMediaPlayers.get("pause"));
         mv.getMediaPlayer().play();
+        
+        Regub.stage.setOnCloseRequest((WindowEvent we) -> {
+            Runtime.getRuntime().halt(0);
+        });     
     }
 }

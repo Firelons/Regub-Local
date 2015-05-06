@@ -1,23 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package regub;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Paul
- */
 public class Testo {
     
     public static void main(String[] args) {
@@ -68,17 +55,9 @@ public class Testo {
         liste_contrats.add(c5);
         
         try {
-            FileOutputStream fos;
-            fos = new FileOutputStream("contrats");
-            try (ObjectOutputStream out = new ObjectOutputStream(fos)) {
-                out.writeObject(liste_contrats);
-                out.close();
-            }
-            fos.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+            FichierController.getInstance().sauverContratsADiffuser(liste_contrats);
         } catch (IOException ex) {
-            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Testo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

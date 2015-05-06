@@ -1,6 +1,4 @@
 
-package regub;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -70,14 +68,6 @@ public class Playlist {
             cal.add(Calendar.SECOND, debut);
             liste_diffusions.add(new Diffusion(cont, cal));
             debut = debut + cont.getDuree();
-        }
-        
-        System.out.println("durée entre videos : "+duree_pause);
-        for (Diffusion d : this.liste_diffusions) {
-            System.out.println(d.getHeureDiffusion().get(Calendar.HOUR_OF_DAY)+":"+
-                    d.getHeureDiffusion().get(Calendar.MINUTE)+":"+
-                    d.getHeureDiffusion().get(Calendar.SECOND)+ " Contrat n°" + d.getContrat().getIdVideo()+
-                    " : " + d.getContrat().getTitre());
         }
     }
 

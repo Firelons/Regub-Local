@@ -1,4 +1,3 @@
-package regub;
 
 import java.io.*;
 import java.net.*;
@@ -149,41 +148,5 @@ public class FichierController {
             file.delete();
             System.out.println("!SUPPRIMER:" + path);
         }
-    }
-
-    public ArrayList<Contrat> serLoad(String name) {
-        ArrayList<Contrat> tcm = new ArrayList();
-        FileInputStream fis;
-        try {
-            fis = new FileInputStream(PATH + name);
-            try (ObjectInputStream in = new ObjectInputStream(fis)) {
-                tcm = (ArrayList<Contrat>) in.readObject();
-                in.close();
-            }
-            fis.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("Contrat local non existant...");
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return tcm;
-    }
-
-    public boolean serSave(String name, ArrayList<Contrat> tcm) {
-        try {
-            FileOutputStream fos;
-            fos = new FileOutputStream(name); //name='contrats'
-            try (ObjectOutputStream out = new ObjectOutputStream(fos)) {
-                out.writeObject(tcm);
-                out.close();
-            }
-            fos.close();
-            return true;
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
     }
 }

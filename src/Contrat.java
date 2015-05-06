@@ -1,6 +1,4 @@
 
-package regub;
-
 import java.util.Calendar;
 
 public class Contrat implements java.io.Serializable {
@@ -29,7 +27,6 @@ public class Contrat implements java.io.Serializable {
         this.dateFin = contrat.dateFin;
     }
 
-    
     public void setIdVideo(int idVideo) {
         this.idVideo = idVideo;
     }

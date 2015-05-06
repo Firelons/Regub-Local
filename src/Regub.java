@@ -1,19 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package regub;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,10 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-/**
- *
- * @author paul
- */
 public class Regub extends Application {
     
     static Stage stage;
@@ -141,17 +126,19 @@ public class Regub extends Application {
         
         
         
+        FXMLLoader fxmlLoader = new FXMLLoader();
         
-        
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        Regub.scene_principale = new Scene(root);
         Regub.stage = stage;
+        Parent root = fxmlLoader.load(getClass().getResource("DiffusionIHM.fxml").openStream());
+        DiffusionIHMController controller = (DiffusionIHMController) fxmlLoader.getController();
+        Regub.scene_principale = new Scene(root);
         Regub.stage.setScene(scene_principale);
         Regub.stage.setFullScreenExitHint("");
         Regub.stage.setResizable(false);
         Regub.stage.setAlwaysOnTop(true);
         Regub.stage.initStyle(StageStyle.UTILITY);
         Regub.stage.show();
+        controller.activerModePleinEcran();
     }
 
     /**
