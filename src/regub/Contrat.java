@@ -20,6 +20,16 @@ public class Contrat implements java.io.Serializable {
         this.dateFin = dateFin;
     }
     
+    public Contrat(final Contrat contrat) {
+        this.idVideo = contrat.idVideo;
+        this.titre = contrat.titre;
+        this.frequence = contrat.frequence;
+        this.duree = contrat.duree;
+        this.dateDebut = contrat.dateDebut;
+        this.dateFin = contrat.dateFin;
+    }
+
+    
     public void setIdVideo(int idVideo) {
         this.idVideo = idVideo;
     }

@@ -11,8 +11,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FichierController {
+    
+    private static FichierController INSTANCE; 
 
     private static final String DOSSIER_LOGS_DIFFUSION = "logs_diffusion";
+    
+    public static FichierController getInstance() throws IOException {
+        if (INSTANCE == null) {
+            INSTANCE = new FichierController();
+        }
+        return INSTANCE;
+    }
     
     public static void loguer_diffusion(Diffusion dif) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -31,9 +40,67 @@ public class FichierController {
         }
     } 
     
+    public ArrayList<Contrat> chargerContratsADiffuser() {
+        ArrayList<Contrat> contrats_a_diffuser = new ArrayList();
+        FileInputStream fis;
+        try {
+            fis = new FileInputStream("contrats");
+            try (ObjectInputStream in = new ObjectInputStream(fis)) {
+                contrats_a_diffuser = (ArrayList<Contrat>) in.readObject();
+                in.close();
+            }
+            fis.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println("Contrat local non existant...");
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return contrats_a_diffuser;
+    }
+    
+    public void sauverContratsReportes(ArrayList<Contrat> contrats_reportes) {
+        try {
+            FileOutputStream fos;
+            fos = new FileOutputStream("contrats_reportes");
+            try (ObjectOutputStream out = new ObjectOutputStream(fos)) {
+                out.writeObject(contrats_reportes);
+                out.close();
+            }
+            fos.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public ArrayList<Contrat> chargerContratsReportes() {
+        ArrayList<Contrat> contrats_reportes = new ArrayList();
+        FileInputStream fis;
+        try {
+            fis = new FileInputStream("contrats_reportes");
+            try (ObjectInputStream in = new ObjectInputStream(fis)) {
+                contrats_reportes = (ArrayList<Contrat>) in.readObject();
+                in.close();
+            }
+            fis.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println("Contrat local non existant...");
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return contrats_reportes;
+    }
+    
+    
+    
     private String IP;
     private String PATH;
 
+    FichierController() {
+        
+    }
+    
     FichierController(String path) {
         this.PATH = path;
     }

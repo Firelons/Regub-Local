@@ -6,9 +6,16 @@
 package regub;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -47,7 +54,17 @@ public class Regub extends Application {
         }
         
         /** RECUPERATION DES CONTRATS DU JOUR **/
-        contrats_a_diffuser = ContratController.getInstance().getContratsADiffuser();
+        contrats_a_diffuser = FichierController.getInstance().chargerContratsADiffuser();
+        
+        /** AJOUTER LES CONTRATS REPORTES AUX CONTRATS A DIFFUSER **/
+        ArrayList<Contrat> contrats_reportes = FichierController.getInstance().chargerContratsReportes();
+        contrats_reportes.stream().forEach((cr) -> {
+            contrats_a_diffuser.stream().filter((cad) -> (cad.getIdVideo() == cr.getIdVideo())).forEach((cad) -> {
+                cad.setFrequence(cad.getFrequence()+cr.getFrequence());
+            });
+        });
+        contrats_reportes.removeAll(contrats_reportes);
+        FichierController.getInstance().sauverContratsReportes(contrats_reportes);
         
         /** TEST SI IL Y A ENCORE DES CONTRATS A DIFFUSER AUJOURDHUI **/
         if (contrats_a_diffuser.isEmpty()) {
@@ -72,6 +89,14 @@ public class Regub extends Application {
         }
         
         /** TANT QU'ON A PAS LE TEMPS DE DIFFUSER TOUTES LES VIDEOS, ON REPORTE CERTAINE DIFFUSION A DEMAIN **/
+        ArrayList<Contrat> contrats_reports = new ArrayList<>();
+        for (Contrat c : contrats_a_diffuser) {
+            contrats_reports.add(new Contrat(c));
+        }
+        for (Contrat c : contrats_reports) {
+            c.setFrequence(0);
+        }
+        
         int duree_diffusion = (int)((Regub.horaires[1].getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / 1000);
         int somme_durees;
         int somme_frequences;
@@ -97,9 +122,29 @@ public class Regub extends Application {
                 if (contrat_tard.getFrequence() == 0) {
                     contrats_a_diffuser.remove(contrat_tard);
                 }
+                
+                for (Contrat c : contrats_reports) {
+                    if (c.getIdVideo() == contrat_tard.getIdVideo()) {
+                        c.setFrequence(c.getFrequence()+1);
+                    }
+                }
             }
             
         } while(somme_durees > duree_diffusion); 
+        
+        try {
+            FileOutputStream fos;
+            fos = new FileOutputStream("contrats_reports");
+            try (ObjectOutputStream out = new ObjectOutputStream(fos)) {
+                out.writeObject(contrats_reports);
+                out.close();
+            }
+            fos.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
         /** TENTATIVE DE GENERATION D'UNE PLAYLIST A PARTIR DE LA LISTE DE CONTRATS,

@@ -34,7 +34,7 @@ public class Testo {
         debut1.set(Calendar.YEAR, 2015); fin1.set(Calendar.YEAR, 2015);
         debut1.set(Calendar.MONTH, 3); fin1.set(Calendar.MONTH, 9);
         debut1.set(Calendar.DAY_OF_MONTH, 1); fin1.set(Calendar.DAY_OF_MONTH, 1);
-        Contrat c1 = new Contrat(1, "cookies", 5000, 8, debut1, fin1);
+        Contrat c1 = new Contrat(1, "cookies", 5, 8, debut1, fin1);
         
         Calendar debut2 = Calendar.getInstance(); Calendar fin2 = Calendar.getInstance();
         debut2.set(Calendar.YEAR, 2015); fin2.set(Calendar.YEAR, 2015);
