@@ -6,11 +6,9 @@
 package regub;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,11 +56,13 @@ public class Regub extends Application {
         
         /** AJOUTER LES CONTRATS REPORTES AUX CONTRATS A DIFFUSER **/
         ArrayList<Contrat> contrats_reportes = FichierController.getInstance().chargerContratsReportes();
-        contrats_reportes.stream().forEach((cr) -> {
-            contrats_a_diffuser.stream().filter((cad) -> (cad.getIdVideo() == cr.getIdVideo())).forEach((cad) -> {
-                cad.setFrequence(cad.getFrequence()+cr.getFrequence());
+        if (!contrats_reportes.isEmpty()) {
+            contrats_reportes.stream().forEach((cr) -> {
+                contrats_a_diffuser.stream().filter((cad) -> (cad.getIdVideo() == cr.getIdVideo())).forEach((cad) -> {
+                    cad.setFrequence(cad.getFrequence()+cr.getFrequence());
+                });
             });
-        });
+        }
         contrats_reportes.removeAll(contrats_reportes);
         FichierController.getInstance().sauverContratsReportes(contrats_reportes);
         FichierController.getInstance().sauverContratsADiffuser(contrats_a_diffuser);
@@ -133,22 +133,9 @@ public class Regub extends Application {
             
         } while(somme_durees > duree_diffusion); 
         
-        try {
-            FileOutputStream fos;
-            fos = new FileOutputStream("contrats_reports");
-            try (ObjectOutputStream out = new ObjectOutputStream(fos)) {
-                out.writeObject(contrats_reports);
-                out.close();
-            }
-            fos.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        FichierController.getInstance().sauverContratsReportes(contrats_reports);
         
-        
-        /** TENTATIVE DE GENERATION D'UNE PLAYLIST A PARTIR DE LA LISTE DE CONTRATS,
+        /** GENERATION D'UNE PLAYLIST A PARTIR DE LA LISTE DE CONTRATS,
              * DE L'HEURE ACTUELLE ET DE L'HEURE DE FERMETURE **/
         playlist = new Playlist(Calendar.getInstance(), Regub.horaires[1], contrats_a_diffuser);
         
