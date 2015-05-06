@@ -65,6 +65,7 @@ public class Regub extends Application {
         });
         contrats_reportes.removeAll(contrats_reportes);
         FichierController.getInstance().sauverContratsReportes(contrats_reportes);
+        FichierController.getInstance().sauverContratsADiffuser(contrats_a_diffuser);
         
         /** TEST SI IL Y A ENCORE DES CONTRATS A DIFFUSER AUJOURDHUI **/
         if (contrats_a_diffuser.isEmpty()) {

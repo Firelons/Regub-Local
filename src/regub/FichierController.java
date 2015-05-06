@@ -40,6 +40,22 @@ public class FichierController {
         }
     } 
     
+    public void sauverContratsADiffuser(ArrayList<Contrat> contrats_a_diffuser) {
+        try {
+            FileOutputStream fos;
+            fos = new FileOutputStream("contrats");
+            try (ObjectOutputStream out = new ObjectOutputStream(fos)) {
+                out.writeObject(contrats_a_diffuser);
+                out.close();
+            }
+            fos.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ContratController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public ArrayList<Contrat> chargerContratsADiffuser() {
         ArrayList<Contrat> contrats_a_diffuser = new ArrayList();
         FileInputStream fis;
