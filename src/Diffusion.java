@@ -1,11 +1,6 @@
 
-
 import java.util.Calendar;
 
-/**
- *
- * @author PaulA
- */
 public class Diffusion {
     
     private Contrat contrat;

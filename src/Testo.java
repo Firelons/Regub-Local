@@ -1,5 +1,4 @@
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -56,7 +55,7 @@ public class Testo {
         
         try {
             FichierController.getInstance().sauverContratsADiffuser(liste_contrats);
-        } catch (IOException ex) {
+        } catch (RegubException ex) {
             Logger.getLogger(Testo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

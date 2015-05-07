@@ -1,9 +1,6 @@
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
@@ -19,7 +16,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -92,7 +88,7 @@ public class DiffusionIHMController implements Initializable {
     
     @FXML
     private void handleButtonQuitterAction(ActionEvent event) {
-        Runtime.getRuntime().halt(0);
+        Regub.terminer();
     }
 
     @Override
@@ -156,7 +152,7 @@ public class DiffusionIHMController implements Initializable {
                         d.getContrat().setFrequence(d.getContrat().getFrequence()-1);
                         try {
                             FichierController.getInstance().sauverContratsADiffuser(Regub.playlist.getListeContrats());
-                        } catch (IOException ex) {
+                        } catch (RegubException ex) {
                             Logger.getLogger(DiffusionIHMController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         label.setText(label.getText() + " : Diffusée ");
@@ -176,7 +172,7 @@ public class DiffusionIHMController implements Initializable {
         mv.getMediaPlayer().play();
         
         Regub.stage.setOnCloseRequest((WindowEvent we) -> {
-            Runtime.getRuntime().halt(0);
+            Regub.terminer();
         });     
     }
 }
