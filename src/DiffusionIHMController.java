@@ -29,7 +29,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 public class DiffusionIHMController implements Initializable {
@@ -52,10 +51,10 @@ public class DiffusionIHMController implements Initializable {
     @FXML
     private ListView<Label> liste;
         
+    private HashMap<String, MediaPlayer> listeMediaPlayers;
+    
     private Scene scene_plein_ecran;
     private StackPane stackPane;
-    
-    HashMap<String, MediaPlayer> listeMediaPlayers;
     
     public void activerModePleinEcran() {
         final DoubleProperty width = mv.fitWidthProperty();
@@ -170,9 +169,5 @@ public class DiffusionIHMController implements Initializable {
         liste.setItems(items);
         mv.setMediaPlayer(listeMediaPlayers.get("pause"));
         mv.getMediaPlayer().play();
-        
-        Regub.stage.setOnCloseRequest((WindowEvent we) -> {
-            Regub.terminer();
-        });     
     }
 }

@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,13 +15,13 @@ public class Testo {
         debut0.set(Calendar.YEAR, 2015); fin0.set(Calendar.YEAR, 2015);
         debut0.set(Calendar.MONTH, 3); fin0.set(Calendar.MONTH, 9);
         debut0.set(Calendar.DAY_OF_MONTH, 1); fin0.set(Calendar.DAY_OF_MONTH, 1);
-        Contrat c0 = new Contrat(0, "ha! gaaaaay!", 4, 2, debut0, fin0);
+        Contrat c0 = new Contrat(0, "ha! gaaaaay!", 5, 2, debut0, fin0);
         
         Calendar debut1 = Calendar.getInstance(); Calendar fin1 = Calendar.getInstance();
         debut1.set(Calendar.YEAR, 2015); fin1.set(Calendar.YEAR, 2015);
         debut1.set(Calendar.MONTH, 3); fin1.set(Calendar.MONTH, 9);
         debut1.set(Calendar.DAY_OF_MONTH, 1); fin1.set(Calendar.DAY_OF_MONTH, 1);
-        Contrat c1 = new Contrat(1, "cookies", 5, 8, debut1, fin1);
+        Contrat c1 = new Contrat(1, "cookies", 4, 8, debut1, fin1);
         
         Calendar debut2 = Calendar.getInstance(); Calendar fin2 = Calendar.getInstance();
         debut2.set(Calendar.YEAR, 2015); fin2.set(Calendar.YEAR, 2015);
@@ -52,6 +53,11 @@ public class Testo {
         liste_contrats.add(c3);
         liste_contrats.add(c4);
         liste_contrats.add(c5);
+        
+        Collections.sort(liste_contrats);
+        for (Contrat c : liste_contrats) {
+            System.out.println(c.getFrequence());
+        }
         
         try {
             FichierController.getInstance().sauverContratsADiffuser(liste_contrats);

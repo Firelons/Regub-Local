@@ -43,13 +43,13 @@
                   <Font name="Calibri" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="bPleinEcran" mnemonicParsing="false" onAction="#handleButtonPleinEcranAction" prefHeight="45.0" prefWidth="74.0" text="Plein écran">
+            <Button fx:id="bPleinEcran" mnemonicParsing="false" onAction="#handleButtonPleinEcranAction" prefHeight="23.0" prefWidth="184.0" text="Plein écran">
                <font>
                   <Font name="Calibri Bold" size="12.0" />
                </font></Button>
             <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="44.0" prefWidth="417.0">
                <children>
-                  <Button fx:id="bQuitter" mnemonicParsing="false" onAction="#handleButtonQuitterAction" prefHeight="23.0" prefWidth="74.0" text="Quitter">
+                  <Button fx:id="bQuitter" mnemonicParsing="false" onAction="#handleButtonQuitterAction" prefHeight="23.0" prefWidth="151.0" text="Quitter">
                      <font>
                         <Font name="Calibri Bold" size="12.0" />
                      </font>

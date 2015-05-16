@@ -1,10 +1,10 @@
 
 import java.util.Calendar;
 
-public class Contrat implements java.io.Serializable {
+public class Contrat implements java.io.Serializable, Comparable<Contrat> {
     private int idVideo;
     private String titre;
-    private int frequence;
+    private Integer frequence;
     private int duree;
     private Calendar dateDebut;
     private Calendar dateFin;   
@@ -73,5 +73,11 @@ public class Contrat implements java.io.Serializable {
     
     public Calendar getDateFin() {
         return this.dateFin;
+    }
+
+    @Override
+    public int compareTo(Contrat c) {
+        if (this.getFrequence() >= c.getFrequence()) return 1;
+        return -1;
     }
 }

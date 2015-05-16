@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class Regub extends Application {
     
@@ -126,8 +127,6 @@ public class Regub extends Application {
             
         } while(somme_durees > duree_diffusion); 
         
-        
-        
         /** GENERATION D'UNE PLAYLIST A PARTIR DE LA LISTE DE CONTRATS,
              * DE L'HEURE ACTUELLE ET DE L'HEURE DE FERMETURE **/
         playlist = new Playlist(Calendar.getInstance(), Regub.horaires[1], contrats_a_diffuser);
@@ -143,6 +142,9 @@ public class Regub extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader();
         
         Regub.stage = stage;
+        stage.setOnCloseRequest((WindowEvent we) -> {
+            terminer();
+        });    
         Parent root = null;
         try {
             root = fxmlLoader.load(getClass().getResource("DiffusionIHM.fxml").openStream());

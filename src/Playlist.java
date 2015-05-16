@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -21,7 +22,7 @@ public class Playlist {
         this.debut_diffusion = debut_diffusion;
         this.fin_diffusion = fin_diffusion;
         this.liste_diffusions = new ArrayList<>();
-        
+        Collections.sort(liste_contrats);
         creerPlanification(liste_contrats);
     }
     
