@@ -1,4 +1,9 @@
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -7,7 +12,8 @@ import java.util.logging.Logger;
 
 public class Testo {
     
-    public static void main(String[] args) {
+   
+    public static void maino(/*String[] args*/) {
         
         ArrayList<Contrat> liste_contrats = new ArrayList<>();
         
@@ -57,6 +63,7 @@ public class Testo {
         Collections.sort(liste_contrats);
         for (Contrat c : liste_contrats) {
             System.out.println(c.getFrequence());
+            
         }
         
         try {
@@ -64,6 +71,8 @@ public class Testo {
         } catch (RegubException ex) {
             Logger.getLogger(Testo.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+         
     }
     
 }

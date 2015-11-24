@@ -38,6 +38,9 @@ public class DiffusionIHMController implements Initializable {
     
     @FXML
     private Label lHoraires;
+    
+    @FXML
+    private Label lTest;
 
     @FXML
     private Button bPleinEcran;
@@ -55,6 +58,14 @@ public class DiffusionIHMController implements Initializable {
     
     private Scene scene_plein_ecran;
     private StackPane stackPane;
+    
+    // variable compteur de diffusions
+    private static int nb = 0;
+    private static int nbdif = 1;
+    private static int nbdif1 = 1;
+    private static int[] nbdif2 = {1};
+    private String[] tab_video ;
+    
     
     public void activerModePleinEcran() {
         final DoubleProperty width = mv.fitWidthProperty();
@@ -124,14 +135,23 @@ public class DiffusionIHMController implements Initializable {
             }
         });
         
+        /* @landry
+        for (Diffusion dif : Regub.playlist.getListeDiffusions()){ 
+            tab_video[nb] = dif.getContrat().getTitre();// enregistre tout les titres de contrats dans tab_video
+            nb++;
+        }
+        // @landry*/
+        
         ObservableList<Label> items = FXCollections.observableArrayList();
+        
                 
         for (Diffusion d : Regub.playlist.getListeDiffusions()) {
+            nb++;
             sb = new StringBuilder();
             sb.append("(").append(String.format("%02d", d.getHeureDiffusion().get(Calendar.HOUR_OF_DAY))).append(":");
             sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.MINUTE))).append(":");
             sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.SECOND))).append(") ");
-            sb.append(d.getContrat().getTitre());
+            sb.append(d.getContrat().getTitre()).append("__ID = " + d.getContrat().getIdVideo());
             Label label = new Label(sb.toString());
             items.add(label);
             
@@ -148,26 +168,51 @@ public class DiffusionIHMController implements Initializable {
                         } catch (IOException ex) {
                             Logger.getLogger(DiffusionIHMController.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        nbdif = d.getContrat().getFrequence() + nb; //@landry : nombre total de diffusion
                         d.getContrat().setFrequence(d.getContrat().getFrequence()-1);
+                        nbdif1 = d.getContrat().getFrequence(); //@landry : nombre restant de diffusions
+
                         try {
                             FichierController.getInstance().sauverContratsADiffuser(Regub.playlist.getListeContrats());
                         } catch (RegubException ex) {
                             Logger.getLogger(DiffusionIHMController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        label.setText(label.getText() + " : Diffusée ");
+                        
+                        // @landry
+                       /* for(int i=0; i<= tab_video.length; i++)
+                        {
+                            if(tab_video[i] == d.getContrat().getTitre() ) nbdif = nbdif2[i]++;// pour la video qui vient d'être diffusée, incrémente son compteur
+                        }*/
+                        // @landry
+                        nbdif -= nbdif1; //nombre de fois de diffusion
+                        
+                        label.setText(label.getText() + " : Diffusée "+nbdif+"fois");
                         MediaPlayer pauseMediaPlayer = listeMediaPlayers.get("pause");
                         pauseMediaPlayer.seek(Duration.ZERO);
                         mv.setMediaPlayer(pauseMediaPlayer);
-                        pauseMediaPlayer.play();
+                        pauseMediaPlayer.play();                        
+                        //nbdif++;
                     });
                     mv.setMediaPlayer(mediaPlayer);
                     mediaPlayer.play();
+                    
                 }
-            }, d.getHeureDiffusion().getTime());
+            }, d.getHeureDiffusion().getTime()); //Temps de la diffusion
         }
 
         liste.setItems(items);
         mv.setMediaPlayer(listeMediaPlayers.get("pause"));
         mv.getMediaPlayer().play();
+        //lTest.setText("val = " + nbdif);
+    }
+    
+    public static int getNbdif() {
+        
+        return nbdif;
+    }
+    
+    public static int[] getNbdif2() {
+        
+        return nbdif2;
     }
 }

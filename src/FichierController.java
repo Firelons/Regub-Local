@@ -26,6 +26,7 @@ public class FichierController {
     }
     
     public static void loguer_diffusion(Diffusion dif) throws IOException {
+        int nb = DiffusionIHMController.getNbdif();
         StringBuilder sb = new StringBuilder();
         sb.append(DOSSIER_LOGS_DIFFUSIONS).append("/")
                 .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.YEAR)))
@@ -37,7 +38,8 @@ public class FichierController {
             sb.append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.HOUR_OF_DAY))).append(":")
                     .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.MINUTE))).append(":")
                     .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.SECOND))).append(" ")
-                    .append(dif.getContrat().getIdVideo());
+                    .append(dif.getContrat().getIdVideo())
+                    .append(" @landry write..." + nb + "fois");
             output.append(sb.toString());
             output.newLine();
         }
@@ -137,17 +139,25 @@ public class FichierController {
     private String PATH;
 
     FichierController() {
-        
+        try{
+            Configuration conf = Configuration.getInstance();
+            IP = conf.getProp("web_url");
+            PATH = conf.getProp("video_path");
+        }
+        catch(RegubException ex)
+        {
+            Logger.getLogger(FichierController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    FichierController(String path) {
+   /* FichierController(String path) {
         this.PATH = path;
     }
 
     FichierController(String path, String ip) {
         this.PATH = path;
         this.IP = ip;
-    }
+    }*/
 
     public void download(String name) {
         URL website;

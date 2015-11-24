@@ -1,8 +1,14 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -57,8 +63,12 @@ public class Regub extends Application {
         
         /** RECUPERATION DES CONTRATS DU JOUR **/
         try {
+            ContratController.getInstance().telechargerContrats();
             contrats_a_diffuser = FichierController.getInstance().chargerContratsADiffuser();
-        } catch (RegubException ex) {
+            
+
+        } catch (Exception ex) {
+            //FichierController.loguer_systeme("\t"+ex.getMessage());
             FichierController.loguer_systeme("\t"+ex.getMessage());
             terminer();
         }
@@ -157,7 +167,7 @@ public class Regub extends Application {
         Regub.stage.setFullScreenExitHint("");
         Regub.stage.setResizable(false);
         Regub.stage.show();
-        controller.activerModePleinEcran();
+        //controller.activerModePleinEcran();
         FichierController.loguer_systeme("Application de diffusion : en cours");
     }
 
@@ -166,7 +176,17 @@ public class Regub extends Application {
         Runtime.getRuntime().halt(0);
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RegubException {
+        ArrayList<Contrat> liste_contrats = new ArrayList<>();
+        
+        //Téléchargement des contrats
+        /*for(Contrat ct : ContratController.getInstance().telechargerContrats()){
+            liste_contrats.add(ct);
+            
+        }*/
+       // FichierController.getInstance().sauverContratsADiffuser(liste_contrats);
+        //Collections.sort(contrats_a_diffuser);        
         launch(args);
+       
     }
 }
