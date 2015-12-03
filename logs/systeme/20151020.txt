@@ -1,0 +1,114 @@
+[15:00:12] Application de diffusion : initialisation
+[15:00:15] Application de diffusion : en cours
+[15:00:19] Application de diffusion : fin
+[15:10:51] Application de diffusion : initialisation
+[15:10:53] Application de diffusion : en cours
+[15:10:57] Application de diffusion : fin
+[15:12:14] Application de diffusion : initialisation
+[15:12:16] Application de diffusion : en cours
+[15:12:18] Application de diffusion : fin
+[15:14:44] Application de diffusion : initialisation
+[15:14:45] Application de diffusion : en cours
+[15:14:48] Application de diffusion : fin
+[15:15:30] Application de diffusion : initialisation
+[15:15:31] Application de diffusion : en cours
+[15:15:34] Application de diffusion : fin
+[15:19:41] Application de diffusion : initialisation
+[15:19:41] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[15:19:41] 	La vidéo pour le contrat n°12 est introuvable. Contrat reporté.
+[15:19:41] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[15:19:41] 	La vidéo pour le contrat n°10 est introuvable. Contrat reporté.
+[15:19:41] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[15:19:43] Application de diffusion : en cours
+[15:19:50] Application de diffusion : fin
+[15:21:59] Application de diffusion : initialisation
+[15:21:59] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[15:21:59] 	La vidéo pour le contrat n°12 est introuvable. Contrat reporté.
+[15:21:59] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[15:21:59] 	La vidéo pour le contrat n°10 est introuvable. Contrat reporté.
+[15:21:59] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[15:22:01] Application de diffusion : en cours
+[15:25:27] Application de diffusion : initialisation
+[15:25:28] Application de diffusion : en cours
+[15:25:31] Application de diffusion : fin
+[15:27:13] Application de diffusion : initialisation
+[15:27:15] Application de diffusion : en cours
+[15:27:17] Application de diffusion : fin
+[15:31:10] Application de diffusion : initialisation
+[15:31:11] Application de diffusion : en cours
+[15:31:14] Application de diffusion : fin
+[15:35:13] Application de diffusion : initialisation
+[15:35:15] Application de diffusion : en cours
+[15:35:17] Application de diffusion : fin
+[15:36:39] Application de diffusion : initialisation
+[15:36:40] Application de diffusion : en cours
+[15:36:44] Application de diffusion : fin
+[15:39:45] Application de diffusion : initialisation
+[15:39:45] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[15:39:45] 	La vidéo pour le contrat n°12 est introuvable. Contrat reporté.
+[15:39:45] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[15:39:45] 	La vidéo pour le contrat n°10 est introuvable. Contrat reporté.
+[15:39:45] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[15:39:47] Application de diffusion : en cours
+[15:40:47] Application de diffusion : fin
+[15:41:29] Application de diffusion : initialisation
+[15:41:31] Application de diffusion : en cours
+[15:41:34] Application de diffusion : fin
+[15:42:24] Application de diffusion : initialisation
+[15:42:26] Application de diffusion : en cours
+[15:42:28] Application de diffusion : fin
+[15:45:11] Application de diffusion : initialisation
+[15:45:11] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[15:45:11] 	La vidéo pour le contrat n°12 est introuvable. Contrat reporté.
+[15:45:11] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[15:45:11] 	La vidéo pour le contrat n°10 est introuvable. Contrat reporté.
+[15:45:11] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[15:45:13] Application de diffusion : en cours
+[15:45:27] Application de diffusion : fin
+[15:45:42] Application de diffusion : initialisation
+[15:45:44] Application de diffusion : en cours
+[15:47:48] Application de diffusion : initialisation
+[15:47:49] Application de diffusion : en cours
+[15:48:09] Application de diffusion : fin
+[15:48:14] Application de diffusion : fin
+[15:51:09] Application de diffusion : initialisation
+[15:51:10] Application de diffusion : en cours
+[15:51:22] Application de diffusion : fin
+[15:51:24] Application de diffusion : fin
+[15:51:36] Application de diffusion : initialisation
+[15:51:38] Application de diffusion : en cours
+[15:59:02] Application de diffusion : initialisation
+[15:59:02] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[15:59:02] 	La vidéo pour le contrat n°12 est introuvable. Contrat reporté.
+[15:59:02] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[15:59:02] 	La vidéo pour le contrat n°10 est introuvable. Contrat reporté.
+[15:59:02] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[15:59:04] Application de diffusion : en cours
+[16:05:38] Application de diffusion : fin
+[16:05:40] Application de diffusion : fin
+[16:06:29] Application de diffusion : initialisation
+[16:06:30] Application de diffusion : en cours
+[16:06:35] Application de diffusion : fin
+[16:09:13] Application de diffusion : initialisation
+[16:09:14] Application de diffusion : en cours
+[16:09:17] Application de diffusion : fin
+[16:15:56] Application de diffusion : initialisation
+[16:15:58] Application de diffusion : en cours
+[16:16:01] Application de diffusion : fin
+[16:32:15] Application de diffusion : initialisation
+[16:32:16] Application de diffusion : en cours
+[16:32:19] Application de diffusion : fin
+[16:32:44] Application de diffusion : initialisation
+[16:32:45] Application de diffusion : en cours
+[16:32:48] Application de diffusion : fin
+[16:36:20] Application de diffusion : initialisation
+[16:36:22] Application de diffusion : en cours
+[16:45:08] Application de diffusion : initialisation
+[16:45:10] Application de diffusion : en cours
+[16:45:45] Application de diffusion : fin
+[16:45:45] Application de diffusion : initialisation
+[16:45:48] Application de diffusion : en cours
+[16:45:49] Application de diffusion : fin
+[16:49:11] Application de diffusion : initialisation
+[16:49:13] Application de diffusion : en cours
+[16:49:16] Application de diffusion : fin

@@ -1,0 +1,182 @@
+[17:02:01] Application de diffusion : initialisation
+[17:02:07] Application de diffusion : en cours
+[17:02:09] Application de diffusion : fin
+[17:16:12] Application de diffusion : initialisation
+[17:16:16] Application de diffusion : en cours
+[17:21:09] Application de diffusion : fin
+[17:23:08] Application de diffusion : initialisation
+[17:23:10] Application de diffusion : en cours
+[17:23:24] Application de diffusion : fin
+[17:23:45] Application de diffusion : initialisation
+[17:23:47] Application de diffusion : en cours
+[17:23:50] Application de diffusion : fin
+[17:25:29] Application de diffusion : initialisation
+[17:25:31] Application de diffusion : en cours
+[17:25:34] Application de diffusion : fin
+[17:28:55] Application de diffusion : initialisation
+[17:28:57] Application de diffusion : en cours
+[17:30:00] Application de diffusion : fin
+[17:30:06] Application de diffusion : initialisation
+[17:30:07] Application de diffusion : en cours
+[17:31:37] Application de diffusion : fin
+[17:31:42] Application de diffusion : initialisation
+[17:31:43] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[17:31:44] Application de diffusion : en cours
+[17:32:03] Application de diffusion : fin
+[17:36:06] Application de diffusion : initialisation
+[17:36:08] Application de diffusion : en cours
+[17:40:29] Application de diffusion : initialisation
+[17:40:31] Application de diffusion : en cours
+[17:41:17] Application de diffusion : initialisation
+[17:41:19] Application de diffusion : en cours
+[17:44:00] Application de diffusion : initialisation
+[17:44:03] Application de diffusion : en cours
+[17:48:06] Application de diffusion : fin
+[17:48:08] Application de diffusion : fin
+[17:48:09] Application de diffusion : fin
+[17:48:10] Application de diffusion : fin
+[17:49:26] Application de diffusion : initialisation
+[17:49:28] Application de diffusion : en cours
+[18:01:13] Application de diffusion : fin
+[18:06:37] Application de diffusion : initialisation
+[18:06:37] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[18:06:39] Application de diffusion : en cours
+[18:07:30] Application de diffusion : fin
+[18:07:35] Application de diffusion : initialisation
+[18:07:35] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[18:07:37] Application de diffusion : en cours
+[18:07:40] Application de diffusion : fin
+[18:10:22] Application de diffusion : initialisation
+[18:10:22] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[18:10:24] Application de diffusion : en cours
+[18:10:46] Application de diffusion : fin
+[18:20:06] Application de diffusion : initialisation
+[18:20:06] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[18:20:06] 	La vidéo pour le contrat n°4 est introuvable. Contrat reporté.
+[18:20:08] Application de diffusion : en cours
+[18:20:17] Application de diffusion : fin
+[18:25:20] Application de diffusion : initialisation
+[18:25:21] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[18:25:21] 	La vidéo pour le contrat n°4 est introuvable. Contrat reporté.
+[18:25:22] Application de diffusion : en cours
+[18:25:25] Application de diffusion : fin
+[18:27:57] Application de diffusion : initialisation
+[18:27:57] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[18:27:57] 	La vidéo pour le contrat n°4 est introuvable. Contrat reporté.
+[18:27:59] Application de diffusion : en cours
+[18:29:13] Application de diffusion : initialisation
+[18:29:13] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[18:29:13] 	La vidéo pour le contrat n°4 est introuvable. Contrat reporté.
+[18:29:15] Application de diffusion : en cours
+[18:29:29] Application de diffusion : initialisation
+[18:29:30] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[18:29:30] 	La vidéo pour le contrat n°4 est introuvable. Contrat reporté.
+[18:29:32] Application de diffusion : en cours
+[18:30:06] Application de diffusion : initialisation
+[18:30:07] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[18:30:07] 	La vidéo pour le contrat n°4 est introuvable. Contrat reporté.
+[18:30:09] Application de diffusion : en cours
+[18:30:11] Application de diffusion : fin
+[18:30:14] Application de diffusion : fin
+[18:30:17] Application de diffusion : fin
+[18:30:20] Application de diffusion : fin
+[18:30:55] Application de diffusion : initialisation
+[18:30:55] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[18:30:55] 	La vidéo pour le contrat n°4 est introuvable. Contrat reporté.
+[18:30:57] Application de diffusion : en cours
+[18:31:09] Application de diffusion : fin
+[18:38:28] Application de diffusion : initialisation
+[18:38:29] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[18:38:31] Application de diffusion : en cours
+[18:39:00] Application de diffusion : initialisation
+[18:39:01] 	La vidéo pour le contrat n°11 est introuvable. Contrat reporté.
+[18:39:02] Application de diffusion : en cours
+[18:42:30] Application de diffusion : fin
+[18:44:03] Application de diffusion : fin
+[18:45:28] Application de diffusion : initialisation
+[18:45:30] Application de diffusion : en cours
+[18:49:07] Application de diffusion : initialisation
+[18:49:09] Application de diffusion : en cours
+[18:49:11] Application de diffusion : fin
+[18:49:31] Application de diffusion : initialisation
+[18:49:33] Application de diffusion : en cours
+[18:49:53] Application de diffusion : fin
+[18:51:24] Application de diffusion : initialisation
+[18:51:26] Application de diffusion : en cours
+[18:51:29] Application de diffusion : fin
+[18:52:50] Application de diffusion : initialisation
+[18:52:52] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[18:52:52] 	La vidéo pour le contrat n°12 est introuvable. Contrat reporté.
+[18:52:52] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[18:52:52] 	La vidéo pour le contrat n°3 est introuvable. Contrat reporté.
+[18:52:52] 	La vidéo pour le contrat n°2 est introuvable. Contrat reporté.
+[18:52:54] Application de diffusion : en cours
+[18:55:01] Application de diffusion : fin
+[18:55:04] Application de diffusion : fin
+[18:55:15] Application de diffusion : initialisation
+[18:55:16] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[18:55:16] 	La vidéo pour le contrat n°12 est introuvable. Contrat reporté.
+[18:55:16] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[18:55:16] 	La vidéo pour le contrat n°3 est introuvable. Contrat reporté.
+[18:55:16] 	La vidéo pour le contrat n°2 est introuvable. Contrat reporté.
+[18:55:18] Application de diffusion : en cours
+[18:55:45] Application de diffusion : fin
+[18:57:24] Application de diffusion : initialisation
+[18:57:24] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[18:57:24] 	La vidéo pour le contrat n°12 est introuvable. Contrat reporté.
+[18:57:24] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[18:57:24] 	La vidéo pour le contrat n°3 est introuvable. Contrat reporté.
+[18:57:24] 	La vidéo pour le contrat n°2 est introuvable. Contrat reporté.
+[18:57:26] Application de diffusion : en cours
+[18:58:44] Application de diffusion : fin
+[18:58:50] Application de diffusion : initialisation
+[18:58:50] 	Les horaires n'ont pas été configurés correctement.
+[18:58:50] Application de diffusion : fin
+[18:59:26] Application de diffusion : initialisation
+[18:59:26] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[18:59:26] 	La vidéo pour le contrat n°12 est introuvable. Contrat reporté.
+[18:59:26] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[18:59:26] 	La vidéo pour le contrat n°3 est introuvable. Contrat reporté.
+[18:59:26] 	La vidéo pour le contrat n°2 est introuvable. Contrat reporté.
+[18:59:28] Application de diffusion : en cours
+[19:01:22] Application de diffusion : fin
+[19:01:27] Application de diffusion : initialisation
+[19:01:27] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[19:01:27] 	La vidéo pour le contrat n°12 est introuvable. Contrat reporté.
+[19:01:27] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[19:01:27] 	La vidéo pour le contrat n°3 est introuvable. Contrat reporté.
+[19:01:27] 	La vidéo pour le contrat n°2 est introuvable. Contrat reporté.
+[19:01:29] Application de diffusion : en cours
+[19:01:48] Application de diffusion : fin
+[19:02:10] Application de diffusion : initialisation
+[19:02:10] 	Le magasin est fermé.
+[19:02:10] Application de diffusion : fin
+[19:02:33] Application de diffusion : initialisation
+[19:02:34] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[19:02:34] 	La vidéo pour le contrat n°12 est introuvable. Contrat reporté.
+[19:02:34] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[19:02:34] 	La vidéo pour le contrat n°3 est introuvable. Contrat reporté.
+[19:02:34] 	La vidéo pour le contrat n°2 est introuvable. Contrat reporté.
+[19:02:35] Application de diffusion : en cours
+[19:10:47] Application de diffusion : fin
+[19:21:05] Application de diffusion : initialisation
+[19:21:07] Application de diffusion : en cours
+[19:22:24] Application de diffusion : fin
+[19:22:41] Application de diffusion : initialisation
+[19:22:43] Application de diffusion : en cours
+[19:22:51] Application de diffusion : fin
+[19:24:09] Application de diffusion : initialisation
+[19:24:11] Application de diffusion : en cours
+[19:24:16] Application de diffusion : fin
+[19:25:48] Application de diffusion : initialisation
+[19:25:50] Application de diffusion : en cours
+[19:25:57] Application de diffusion : fin
+[19:29:07] Application de diffusion : initialisation
+[19:29:09] Application de diffusion : en cours
+[19:29:12] Application de diffusion : fin
+[19:30:36] Application de diffusion : initialisation
+[19:30:38] Application de diffusion : en cours
+[19:30:39] Application de diffusion : fin
+[19:32:03] Application de diffusion : initialisation
+[19:32:05] Application de diffusion : en cours
+[19:32:12] Application de diffusion : fin

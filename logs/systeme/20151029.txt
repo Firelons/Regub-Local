@@ -1,0 +1,6 @@
+[16:46:26] Application de diffusion : initialisation
+[16:46:42] Application de diffusion : en cours
+[16:47:08] Application de diffusion : fin
+[16:48:24] Application de diffusion : initialisation
+[16:48:30] Application de diffusion : en cours
+[16:48:54] Application de diffusion : fin

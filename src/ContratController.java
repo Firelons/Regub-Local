@@ -72,21 +72,36 @@ public class ContratController {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             //String sql = "SELECT * FROM Video";
-            String sql = "SELECT Video.idVideo, Video.titre, Video.frequence, Video.duree, Video.dateDebut, Video.dateFin, TypeRayon.idTypeRayon, Magasin.idMagasin " +
-                          "FROM Video " +
-                          "INNER JOIN DiffusionsTypesRayons ON DiffusionsTypesRayons.idVideo = Video.idVideo " +
-                          "INNER JOIN TypeRayon ON DiffusionsTypesRayons.idTypeRayon = TypeRayon.idTypeRayon " +
-                          "INNER JOIN Rayons ON TypeRayon.idTypeRayon = Rayons.idTypeRayon " +
-                          "INNER JOIN Magasin ON Rayons.idMagasin = Magasin.idMagasin " +
-                          "INNER JOIN Region ON Magasin.idRegion = Region.idRegion " +
-                          "WHERE TypeRayon.libelle = ? "+ 
-                          "AND Region.libelle = ? " +
-                          "AND Magasin.nom = ? ";
+            /*
+            String sql = "SELECT distinct Video.idVideo, Video.titre, Video.frequence, Video.duree, Video.datedebut, Video.datefin, Region.libelle as libregion, "
+                         + "Magasin.nom as nommagasin,TypeRayon.libelle AS librayon\n" +
+                         "FROM Video, Region, Magasin, TypeRayon\n" +
+                         "INNER JOIN DiffusionsTypesRayons ON DiffusionsTypesRayons.idVideo = Video.idVideo\n" +
+                         "INNER JOIN DiffusionRegions ON DiffusionsTypesRayons.idvideo = DiffusionRegions.idvideo\n" +
+                         "INNER JOIN Region ON DiffusionRegions.idRegion = Region.idRegion\n" +
+                         "INNER JOIN Magasin ON Region.idRegion = Magasin.idRegion\n" +
+                         "INNER JOIN Rayons ON Magasin.idMagasin = Rayons.idMagasin\n" +
+                         "INNER JOIN TypeRayon ON Rayons.idTypeRayon = TypeRayon.idTypeRayon\n" +
+                         "WHERE Region.libelle = ?\n" +
+                         "AND Magasin.nom= ?\n" +
+                         "AND TypeRayon.libelle = ?" ;
+            */
+            String sql = "SELECT distinct Video.idVideo, Video.titre, Video.frequence, Video.duree, Video.datedebut, Video.datefin\n" +
+                         "FROM Video\n" +
+                         "INNER JOIN DiffusionsTypesRayons ON DiffusionsTypesRayons.idVideo = Video.idVideo\n" +
+                         "INNER JOIN DiffusionRegions ON DiffusionsTypesRayons.idvideo = DiffusionRegions.idvideo\n" +
+                         "INNER JOIN Region ON DiffusionRegions.idRegion = Region.idRegion\n" +
+                         "INNER JOIN Magasin ON Region.idRegion = Magasin.idRegion\n" +
+                         "INNER JOIN Rayons ON Magasin.idMagasin = Rayons.idMagasin\n" +
+                         "INNER JOIN TypeRayon ON Rayons.idTypeRayon = TypeRayon.idTypeRayon\n" +
+                         "WHERE Region.libelle = ?\n" +
+                         "AND Magasin.nom= ?\n" +
+                         "AND TypeRayon.libelle = ?" ;
                   
             preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1,RAYON);
-            preparedStatement.setString(2,REGION);
-            preparedStatement.setString(3,MAGASIN);
+            preparedStatement.setString(1,REGION);
+            preparedStatement.setString(2,MAGASIN);
+            preparedStatement.setString(3,RAYON);
             ResultSet rs = preparedStatement.executeQuery(); 
             
             /*TELECHARGEMENT DES CONTRATS*/
