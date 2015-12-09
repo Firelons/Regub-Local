@@ -1,5 +1,0 @@
-[10:00:17] Application de diffusion : initialisation
-[10:00:17] 	La vidéo pour le contrat n°2 est introuvable. Contrat reporté.
-[10:07:39] Application de diffusion : initialisation
-[10:07:39] 	La vidéo pour le contrat n°2 est introuvable. Contrat reporté.
-[10:27:17] Application de diffusion : initialisation

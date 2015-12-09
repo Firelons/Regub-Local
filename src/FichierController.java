@@ -26,31 +26,43 @@ public class FichierController {
     }
     
     public static void loguer_diffusion(Diffusion dif) throws IOException {
-        int nb = DiffusionIHMController.getNbdif();
         StringBuilder sb = new StringBuilder();
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+         
+        
         sb.append(DOSSIER_LOGS_DIFFUSIONS).append("/")
-                .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.YEAR)))
-                .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.MONTH)))
+                .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.YEAR))).append("-")
+                .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.MONTH)+1)).append("-")
                 .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.DAY_OF_MONTH)))
                 .append(".txt");
         try (BufferedWriter output = new BufferedWriter(new FileWriter(sb.toString(), true))) {
             sb = new StringBuilder();
+            
+            sb1.append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.YEAR))).append("-")
+                .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.MONTH)+1)).append("-")
+                .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.DAY_OF_MONTH)));
+                
+            
             sb.append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.HOUR_OF_DAY))).append(":")
                     .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.MINUTE))).append(":")
-                    .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.SECOND))).append(" ")
-                    .append(dif.getContrat().getIdVideo())
-                    .append(" @landry write..." + nb + "fois");
-            output.append(sb.toString());
+                    .append(String.format("%02d", dif.getHeureDiffusion().get(Calendar.SECOND)));
+                 
+            
+            sb2.append(sb1).append(" ").append(sb).append(" ").append(dif.getContrat().getIdVideo());
+           
+            
+            output.append(sb2.toString());
             output.newLine();
-        }
+        }    
     } 
     
     public static void loguer_systeme(String message) {
         StringBuilder sb = new StringBuilder();
         Calendar cal = Calendar.getInstance();
         sb.append(DOSSIER_LOGS_SYSTEME).append("/")
-                .append(String.format("%02d", cal.get(Calendar.YEAR)))
-                .append(String.format("%02d", cal.get(Calendar.MONTH)))
+                .append(String.format("%02d", cal.get(Calendar.YEAR))).append("-")
+                .append(String.format("%02d", cal.get(Calendar.MONTH)+1)).append("-")
                 .append(String.format("%02d", cal.get(Calendar.DAY_OF_MONTH)))
                 .append(".txt");
         try (BufferedWriter output = new BufferedWriter(new FileWriter(sb.toString(), true))) {
@@ -149,16 +161,6 @@ public class FichierController {
             Logger.getLogger(FichierController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-   /* FichierController(String path) {
-        this.PATH = path;
-    }
-
-    FichierController(String path, String ip) {
-        this.PATH = path;
-        this.IP = ip;
-    }*/
-
     public void download(String name) {
         URL website;
         try {

@@ -17,13 +17,11 @@ import java.util.logging.Logger;
 /**
  *
  * @author vinc
+ * @modif landry
+ * 
+ * S'execute au cas où les contrats n'ont pas été téléchargés avant l'ouverture du magasin
  */
 public class ContratController {
-    /*private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/regub";
-    private static final String USER = "root";
-    private static final String PASS = "";*/
-    
     
     private static String JDBC_DRIVER;
     private static String DB_URL;
@@ -31,8 +29,7 @@ public class ContratController {
     private static String PASS;
     private static String RAYON;
     private static String REGION;
-    private static String MAGASIN;
-    
+    private static String MAGASIN;    
     
     private static ContratController INSTANCE;
     
@@ -65,27 +62,14 @@ public class ContratController {
         
         PreparedStatement preparedStatement = null;
         ArrayList<Contrat> contrat_remote = new ArrayList();
+        
         Connection conn = null;
         Date date= new Date(), dateDeb = new Date(), dateFin = new Date();
         convertToCalendar(date);
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            //String sql = "SELECT * FROM Video";
-            /*
-            String sql = "SELECT distinct Video.idVideo, Video.titre, Video.frequence, Video.duree, Video.datedebut, Video.datefin, Region.libelle as libregion, "
-                         + "Magasin.nom as nommagasin,TypeRayon.libelle AS librayon\n" +
-                         "FROM Video, Region, Magasin, TypeRayon\n" +
-                         "INNER JOIN DiffusionsTypesRayons ON DiffusionsTypesRayons.idVideo = Video.idVideo\n" +
-                         "INNER JOIN DiffusionRegions ON DiffusionsTypesRayons.idvideo = DiffusionRegions.idvideo\n" +
-                         "INNER JOIN Region ON DiffusionRegions.idRegion = Region.idRegion\n" +
-                         "INNER JOIN Magasin ON Region.idRegion = Magasin.idRegion\n" +
-                         "INNER JOIN Rayons ON Magasin.idMagasin = Rayons.idMagasin\n" +
-                         "INNER JOIN TypeRayon ON Rayons.idTypeRayon = TypeRayon.idTypeRayon\n" +
-                         "WHERE Region.libelle = ?\n" +
-                         "AND Magasin.nom= ?\n" +
-                         "AND TypeRayon.libelle = ?" ;
-            */
+            
             String sql = "SELECT distinct Video.idVideo, Video.titre, Video.frequence, Video.duree, Video.datedebut, Video.datefin\n" +
                          "FROM Video\n" +
                          "INNER JOIN DiffusionsTypesRayons ON DiffusionsTypesRayons.idVideo = Video.idVideo\n" +
@@ -171,10 +155,14 @@ public class ContratController {
         
         return contrat_remote;
     }
-    
+ 
+
     private Calendar convertToCalendar (Date date){
         Calendar cale = Calendar.getInstance();
         cale.setTime(date);
         return cale;
     }
+    
+    
+    
 }

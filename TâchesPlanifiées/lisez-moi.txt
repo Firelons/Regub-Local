@@ -1,0 +1,16 @@
+La tâche planifiée ici est tacheOuverture.bat, son exécution devra être 
+planifié dans le systeme d'exploitation.
+(codée pour un systeme windows!)
+
+Détail du fichier tacheOuverture.bat:
+
+--> Copy du fichier Regub_local.jar et du fichier de conf dans le 
+rep courant (il contient les fichiers .class)
+
+--> Création du rep cible video
+
+--> Téléchargement des videos vers le rep cible
+
+--> Copy des videos dans le rep de videos de l'appli
+
+-->Suppression des fichiers et dossiers créés.

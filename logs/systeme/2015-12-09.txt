@@ -1,0 +1,21 @@
+[13:35:22] Application de diffusion : initialisation
+[13:35:24] Application de diffusion : en cours
+[13:56:28] Application de diffusion : fin
+[13:58:04] Application de diffusion : initialisation
+[13:58:04] 	Le magasin est fermé.
+[13:58:04] Application de diffusion : fin
+[13:58:25] Application de diffusion : initialisation
+[13:58:27] Application de diffusion : en cours
+[13:58:34] Application de diffusion : fin
+[13:58:52] Application de diffusion : initialisation
+[13:58:54] Application de diffusion : en cours
+[13:58:56] Application de diffusion : fin
+[13:59:19] Application de diffusion : initialisation
+[13:59:21] Application de diffusion : en cours
+[13:59:25] Application de diffusion : fin
+[13:59:45] Application de diffusion : initialisation
+[13:59:47] Application de diffusion : en cours
+[13:59:53] Application de diffusion : fin
+[13:59:57] Application de diffusion : initialisation
+[13:59:59] Application de diffusion : en cours
+[14:00:02] Application de diffusion : fin

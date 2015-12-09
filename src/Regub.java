@@ -28,7 +28,7 @@ public class Regub extends Application {
     static Configuration config;
     
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws ClassNotFoundException, SQLException {
         
         FichierController.loguer_systeme("Application de diffusion : initialisation");
         
@@ -63,7 +63,9 @@ public class Regub extends Application {
         
         /** RECUPERATION DES CONTRATS DU JOUR **/
         try {
-            ContratController.getInstance().telechargerContrats();
+            /*Plus besoin de télécharger les contrats!
+            *ContratController.getInstance().telechargerContrats(); 
+            */            
             contrats_a_diffuser = FichierController.getInstance().chargerContratsADiffuser();
             
 
@@ -153,7 +155,13 @@ public class Regub extends Application {
         
         Regub.stage = stage;
         stage.setOnCloseRequest((WindowEvent we) -> {
-            terminer();
+            try {
+                terminer();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Regub.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Regub.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });    
         Parent root = null;
         try {
@@ -171,21 +179,13 @@ public class Regub extends Application {
         FichierController.loguer_systeme("Application de diffusion : en cours");
     }
 
-    public static void terminer() {
+    public static void terminer() throws ClassNotFoundException, SQLException{
         FichierController.loguer_systeme("Application de diffusion : fin");
         Runtime.getRuntime().halt(0);
     }
     
     public static void main(String[] args) throws RegubException {
-        ArrayList<Contrat> liste_contrats = new ArrayList<>();
         
-        //Téléchargement des contrats
-        /*for(Contrat ct : ContratController.getInstance().telechargerContrats()){
-            liste_contrats.add(ct);
-            
-        }*/
-       // FichierController.getInstance().sauverContratsADiffuser(liste_contrats);
-        //Collections.sort(contrats_a_diffuser);        
         launch(args);
        
     }

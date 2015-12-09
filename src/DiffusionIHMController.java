@@ -2,6 +2,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -38,9 +39,6 @@ public class DiffusionIHMController implements Initializable {
     
     @FXML
     private Label lHoraires;
-    
-    @FXML
-    private Label lTest;
 
     @FXML
     private Button bPleinEcran;
@@ -58,14 +56,10 @@ public class DiffusionIHMController implements Initializable {
     
     private Scene scene_plein_ecran;
     private StackPane stackPane;
-    
-    // variable compteur de diffusions
-    private static int nb = 0;
-    private static int nbdif = 1;
-    private static int nbdif1 = 1;
-    private static int[] nbdif2 = {1};
-    private String[] tab_video ;
-    
+    int i =0;
+    int tabl[]= new int[100];
+  
+  
     
     public void activerModePleinEcran() {
         final DoubleProperty width = mv.fitWidthProperty();
@@ -98,12 +92,18 @@ public class DiffusionIHMController implements Initializable {
     
     @FXML
     private void handleButtonQuitterAction(ActionEvent event) {
-        Regub.terminer();
+        try {
+            Regub.terminer();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DiffusionIHMController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DiffusionIHMController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+          for(int t:tabl)tabl[t]=0;
         //afficher horaires du jour
         String[] days = new DateFormatSymbols(Locale.getDefault()).getWeekdays();
         StringBuilder sb = new StringBuilder();
@@ -135,26 +135,17 @@ public class DiffusionIHMController implements Initializable {
             }
         });
         
-        /* @landry
-        for (Diffusion dif : Regub.playlist.getListeDiffusions()){ 
-            tab_video[nb] = dif.getContrat().getTitre();// enregistre tout les titres de contrats dans tab_video
-            nb++;
-        }
-        // @landry*/
-        
         ObservableList<Label> items = FXCollections.observableArrayList();
-        
                 
         for (Diffusion d : Regub.playlist.getListeDiffusions()) {
-            nb++;
             sb = new StringBuilder();
             sb.append("(").append(String.format("%02d", d.getHeureDiffusion().get(Calendar.HOUR_OF_DAY))).append(":");
             sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.MINUTE))).append(":");
             sb.append(String.format("%02d", d.getHeureDiffusion().get(Calendar.SECOND))).append(") ");
-            sb.append(d.getContrat().getTitre()).append("__ID = " + d.getContrat().getIdVideo());
+            sb.append(d.getContrat().getTitre());
             Label label = new Label(sb.toString());
             items.add(label);
-            
+         
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
@@ -168,51 +159,40 @@ public class DiffusionIHMController implements Initializable {
                         } catch (IOException ex) {
                             Logger.getLogger(DiffusionIHMController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        nbdif = d.getContrat().getFrequence() + nb; //@landry : nombre total de diffusion
                         d.getContrat().setFrequence(d.getContrat().getFrequence()-1);
-                        nbdif1 = d.getContrat().getFrequence(); //@landry : nombre restant de diffusions
-
                         try {
                             FichierController.getInstance().sauverContratsADiffuser(Regub.playlist.getListeContrats());
                         } catch (RegubException ex) {
                             Logger.getLogger(DiffusionIHMController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
-                        // @landry
-                       /* for(int i=0; i<= tab_video.length; i++)
-                        {
-                            if(tab_video[i] == d.getContrat().getTitre() ) nbdif = nbdif2[i]++;// pour la video qui vient d'être diffusée, incrémente son compteur
-                        }*/
-                        // @landry
-                        nbdif -= nbdif1; //nombre de fois de diffusion
+                        tabl[d.getContrat().getIdVideo()]++;
                         
-                        label.setText(label.getText() + " : Diffusée "+nbdif+"fois");
+//                   int nomb1 = 0;  
+//          int nomb2 = 0;  
+//          int nomb3 = 0;  
+//          int nomb4 = 0;  
+//          int nomb5 = 0;  
+//                        if(d.getContrat().getIdVideo() == 0){
+//                             nomb1++ ;
+//                             label.setText(label.getText() + " : Diffusée "+nomb1);
+//                        }
+//                        
+                        
+                        label.setText(label.getText() + " : Diffusée "+tabl[d.getContrat().getIdVideo()]+" fois");
                         MediaPlayer pauseMediaPlayer = listeMediaPlayers.get("pause");
                         pauseMediaPlayer.seek(Duration.ZERO);
                         mv.setMediaPlayer(pauseMediaPlayer);
-                        pauseMediaPlayer.play();                        
-                        //nbdif++;
+                        pauseMediaPlayer.play();
                     });
                     mv.setMediaPlayer(mediaPlayer);
                     mediaPlayer.play();
-                    
                 }
-            }, d.getHeureDiffusion().getTime()); //Temps de la diffusion
+            }, d.getHeureDiffusion().getTime());
         }
 
         liste.setItems(items);
         mv.setMediaPlayer(listeMediaPlayers.get("pause"));
         mv.getMediaPlayer().play();
-        //lTest.setText("val = " + nbdif);
-    }
-    
-    public static int getNbdif() {
-        
-        return nbdif;
-    }
-    
-    public static int[] getNbdif2() {
-        
-        return nbdif2;
     }
 }
