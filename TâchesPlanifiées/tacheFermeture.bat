@@ -10,4 +10,3 @@ java.exe -cp Regub_local.jar;lib/mysql-connector-java-5.1.23-bin.jar Enregistrer
 
 rmdir logs
 del /s Regub_local.jar
-pause

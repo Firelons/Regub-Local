@@ -1,0 +1,2 @@
+[10:38:54] Application de diffusion : initialisation
+[10:38:58] Application de diffusion : en cours
