@@ -87,7 +87,8 @@ public class Regub extends Application {
         contrats_reportes.removeAll(contrats_reportes);
         
         /** TEST SI TOUTES LES VIDEOS DE CONTRATS EXISTENT, REPORT SI NON **/
-        for (int i = contrats_a_diffuser.size()-1; i >= 0; i--) {
+        FichierController.loguer_systeme("\tNombre de contrats du jour: "+contrats_a_diffuser.size());
+        for (int i = contrats_a_diffuser.size()-1; i >= 0; i--) {            
             f = new File("videos/"+contrats_a_diffuser.get(i).getIdVideo()+".mp4");
             if(!f.exists() || f.isDirectory()) {
                 FichierController.loguer_systeme("\tLa vidéo pour le contrat n°" + contrats_a_diffuser.get(i).getIdVideo() + " est introuvable. Contrat reporté.");

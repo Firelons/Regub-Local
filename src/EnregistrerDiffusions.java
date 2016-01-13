@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 public final class EnregistrerDiffusions  {
        
-     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver"; 
+     private static String JDBC_DRIVER; 
     private String DB_URL ;
     private  String USER;
     private String PASS;
@@ -38,11 +38,12 @@ public EnregistrerDiffusions(){
      Configuration conf;
         try{
             conf = Configuration.getInstance();
-        DB_URL = conf.getProp("db_url");
-        USER = conf.getProp("user");
-        PASS = conf.getProp("pass");
-        idmagasin = conf.getProp("idmagasin");
-        idTypeRayon = conf.getProp("idtyperayon");
+            JDBC_DRIVER = conf.getProp("jdbc_driver");
+            DB_URL = conf.getProp("db_url");
+            USER = conf.getProp("user");
+            PASS = conf.getProp("pass");
+            idmagasin = conf.getProp("idmagasin");
+            idTypeRayon = conf.getProp("idtyperayon");
          try {
              upload();
          } catch (ClassNotFoundException ex) {
@@ -98,14 +99,12 @@ public EnregistrerDiffusions(){
         dat[numLigne -1] = ligne.substring(0, 19); 
         id[numLigne -1] = Integer.parseInt(ligne.substring(20,ind));    
         } 
-            in.close();
-       
+            in.close();       
     }
     catch (IOException ie)
     {
          ie.printStackTrace(); 
     } 
-        
         // Connection puis enregistrement des diffusions dans la BD
         Connection conn = null;
         //PreparedStatement ps = null;
@@ -113,7 +112,7 @@ public EnregistrerDiffusions(){
            
         try {
              Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             conn = DriverManager.getConnection(DB_URL, USER, PASS);
     
             String sql = "INSERT INTO Diffusions VALUES(NULL,?,?,?,?)";
             ps = conn.prepareStatement(sql);
@@ -123,11 +122,12 @@ public EnregistrerDiffusions(){
             ps.setInt(1,id[j]);
             ps.setInt(2,Integer.parseInt(idmagasin));
             ps.setInt(3,Integer.parseInt(idTypeRayon));
-              ps.setString(4,dat[j]);
-              
+            ps.setString(4,dat[j]);
+            System.out.println(ps.toString());
 //            ps.setObject(2, magasin,Types.VARCHAR);
 //              ps.setObject(3, rayon,Types.VARCHAR);
-                ps.executeUpdate();
+            ps.executeUpdate();
+            System.out.println("Enregistrement...");
            
          }
                

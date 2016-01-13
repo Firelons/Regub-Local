@@ -1,0 +1,38 @@
+[15:47:52] Application de diffusion : initialisation
+[15:48:00] Application de diffusion : en cours
+[15:48:03] Application de diffusion : fin
+[15:53:11] Application de diffusion : initialisation
+[15:53:13] Application de diffusion : en cours
+[15:53:17] Application de diffusion : fin
+[15:53:26] Application de diffusion : initialisation
+[15:53:28] Application de diffusion : en cours
+[15:53:30] Application de diffusion : fin
+[15:53:36] Application de diffusion : initialisation
+[15:53:38] Application de diffusion : en cours
+[15:53:46] Application de diffusion : fin
+[15:54:16] Application de diffusion : initialisation
+[15:54:18] Application de diffusion : en cours
+[15:54:20] Application de diffusion : fin
+[15:54:32] Application de diffusion : initialisation
+[15:54:37] Application de diffusion : initialisation
+[15:54:39] Application de diffusion : en cours
+[15:54:45] Application de diffusion : fin
+[15:55:04] Application de diffusion : initialisation
+[15:55:06] Application de diffusion : en cours
+[15:55:47] Application de diffusion : initialisation
+[15:55:49] Application de diffusion : fin
+[15:55:50] Application de diffusion : en cours
+[15:56:02] Application de diffusion : fin
+[15:58:03] Application de diffusion : initialisation
+[15:58:03] 	Nombre de contrats du jour: 2
+[15:58:03] 	Nombre de contrats du jour: 2
+[15:58:06] Application de diffusion : en cours
+[15:59:19] Application de diffusion : fin
+[16:06:20] Application de diffusion : initialisation
+[16:06:20] 	Nombre de contrats du jour: 2
+[16:06:21] Application de diffusion : en cours
+[16:06:25] Application de diffusion : fin
+[16:09:02] Application de diffusion : initialisation
+[16:09:02] 	Nombre de contrats du jour: 2
+[16:09:04] Application de diffusion : en cours
+[17:42:07] Application de diffusion : fin

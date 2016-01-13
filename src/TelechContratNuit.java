@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -74,11 +76,13 @@ public class TelechContratNuit {
         PreparedStatement preparedStatement = null;
         ArrayList<Contrat> contrat_remote = new ArrayList();
         Connection conn = null;
-        Date date= new Date(), dateDeb = new Date(), dateFin = new Date();
-        convertToCalendar(date);
+        Date date = new Date(), dateDeb = new Date(), dateFin = new Date();
+        
+         
         try {
             
             Class.forName(JDBC_DRIVER);
+            //conn = DriverManager.getConnection(DB_URL, USER, PASS);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             
             String sql = "SELECT distinct Video.idVideo, Video.titre, Video.frequence, Video.duree, Video.datedebut, Video.datefin\n" +
@@ -100,6 +104,7 @@ public class TelechContratNuit {
             ResultSet rs = preparedStatement.executeQuery(); 
             
             /*TELECHARGEMENT DES CONTRATS*/
+            int count =0;
             while (rs.next()) {                
                 dateDeb = rs.getDate("dateDebut");
                 dateFin = rs.getDate("dateFin"); 
@@ -108,10 +113,15 @@ public class TelechContratNuit {
                 {
                     Contrat cm = new Contrat(rs.getInt("idVideo"), rs.getString("titre"), 
                                              rs.getInt("frequence"),rs.getInt("duree"), 
-                                             convertToCalendar(dateDeb), convertToCalendar(dateFin));                
-                    contrat_remote.add(cm);
+                                             convertToCalendar(dateDeb), convertToCalendar(dateFin)); 
+                    
+                    //System.out.println("video "+cm.getIdVideo()+" "+cm.getTitre()+" debut= "+dateDeb+" fin= "+dateFin+"\nDate du Jour: "+date+"\n");
+                    
+                    contrat_remote.add(cm);                    
                 }
+                count++;
             }
+           System.out.println(count + " Contrat(s) créés aujourd'hui.");
            rs.close(); 
            
            /*TELECHARGEMENT DES VIDEOS*/
@@ -138,11 +148,13 @@ public class TelechContratNuit {
                    }
                    if(!exist){
                        if(ct.getDateFin().after(convertToCalendar(date)))
-                           FichierController.getInstance().download(ct.getIdVideo()+".mp4");
+                           //System.out.println("Téléchargement...");
+                            FichierController.getInstance().download(ct.getIdVideo()+".mp4");
                    }
                }
            }
            /*PERSISTENCE(SAUVEGARDE) DES CONTRATS*/
+           System.out.println("\tNombre de contrats du jour: "+contrat_remote.size());
            FichierController.getInstance().sauverContratsADiffuser(contrat_remote);         
         } 
         catch (Exception e) {
@@ -173,17 +185,11 @@ public class TelechContratNuit {
         return cale;
     }
     
+    
     public static void main(String[] args) throws RegubException {
         
         new TelechContratNuit(); //exécution du controleur de la classe
-        contrats = telechargerContrats();
-        
-        /*Timer t = new Timer(); 
-        GregorianCalendar gc = new GregorianCalendar(); 
-        gc.add(Calendar.SECOND, 3); 
-        t.scheduleAtFixedRate(new MyTask(), gc.getTime(),5000); */
-        
+            contrats = telechargerContrats();
+      
     }
-    
-    
 }

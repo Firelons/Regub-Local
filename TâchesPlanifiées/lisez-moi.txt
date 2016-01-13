@@ -2,7 +2,7 @@ La tâche planifiée ici est tacheOuverture.bat, son exécution devra être
 planifié dans le systeme d'exploitation.
 (codée pour un systeme windows!)
 
-Détail du fichier tacheOuverture.bat:
+	1) Détail du fichier tacheOuverture.bat:
 
 --> Copy du fichier Regub_local.jar et du fichier de conf dans le 
 rep courant (il contient les fichiers .class)
@@ -11,6 +11,19 @@ rep courant (il contient les fichiers .class)
 
 --> Téléchargement des videos vers le rep cible
 
+--> Copy de la video de pause dans le nouveau repertoire créé
+
+--> Suppression du rep video de l'appli
+
+--> Recréation du rep cible video et copy des videos télechargées + la 
+video de pause.( toute cette manip c'est dans le but de supprimer les 
+videos dont le contrat est terminé)
+
 --> Copy des videos dans le rep de videos de l'appli
 
--->Suppression des fichiers et dossiers créés.
+--> Suppression des fichiers et dossiers créés.
+
+
+	2) Détail du fichier tacheFermeture.bat:
+
+Un peu pareille que la tâche précédente.

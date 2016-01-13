@@ -1,0 +1,20 @@
+					-----------------INSTALLATION-------------
+
+L'application Regub Local est très simpla à utiliser, et encore plus simple à installer.
+
+	1. faut copier le repertoire Regub_Local_V1.0 dans votre disque d'installation,
+		en l'occurence le disque C:/ dans le repertoire Programme Files;
+
+	NB. Il est conseiller de créer un raccourci de ce fichier sur le bureau pour qu'il soit facilement accessible.
+
+	2. L'application possède un repertoir nommé taches_planifiées qui contient deux taches: TâcheOuverture et TâcheFermeture
+		qu'il faudra planifier dans le systeme respectivement entre minuit et 06h du matin pour la première(avant l'ouverture 
+		du magasin), et entre 22h et minuit pour la seconde(après la fermeture du magasin).
+
+Pour exécuter régub, exécuter le fichier regub_local.bat.
+
+
+
+
+
+				Voilà, Régub Local est prête à être utilisée!

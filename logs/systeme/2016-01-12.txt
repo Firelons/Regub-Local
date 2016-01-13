@@ -1,0 +1,47 @@
+[10:16:52] Application de diffusion : initialisation
+[10:16:52] 	Nombre de contrats du jour: 10
+[10:16:52] 	La vidéo pour le contrat n°3 est introuvable. Contrat reporté.
+[10:16:52] 	La vidéo pour le contrat n°23 est introuvable. Contrat reporté.
+[10:16:52] 	La vidéo pour le contrat n°22 est introuvable. Contrat reporté.
+[10:16:52] 	La vidéo pour le contrat n°21 est introuvable. Contrat reporté.
+[10:16:52] 	La vidéo pour le contrat n°18 est introuvable. Contrat reporté.
+[10:16:52] 	La vidéo pour le contrat n°17 est introuvable. Contrat reporté.
+[10:16:52] 	La vidéo pour le contrat n°15 est introuvable. Contrat reporté.
+[10:16:52] 	La vidéo pour le contrat n°24 est introuvable. Contrat reporté.
+[10:16:52] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[10:16:52] 	La vidéo pour le contrat n°20 est introuvable. Contrat reporté.
+[10:17:01] Application de diffusion : en cours
+[10:17:19] Application de diffusion : fin
+[14:02:13] Application de diffusion : initialisation
+[14:02:13] 	Nombre de contrats du jour: 11
+[14:02:13] 	La vidéo pour le contrat n°24 est introuvable. Contrat reporté.
+[14:02:13] 	La vidéo pour le contrat n°23 est introuvable. Contrat reporté.
+[14:02:13] 	La vidéo pour le contrat n°22 est introuvable. Contrat reporté.
+[14:02:13] 	La vidéo pour le contrat n°21 est introuvable. Contrat reporté.
+[14:02:13] 	La vidéo pour le contrat n°18 est introuvable. Contrat reporté.
+[14:02:13] 	La vidéo pour le contrat n°17 est introuvable. Contrat reporté.
+[14:02:13] 	La vidéo pour le contrat n°15 est introuvable. Contrat reporté.
+[14:02:13] 	La vidéo pour le contrat n°14 est introuvable. Contrat reporté.
+[14:02:13] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[14:02:13] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[14:02:13] 	La vidéo pour le contrat n°3 est introuvable. Contrat reporté.
+[14:02:19] Application de diffusion : en cours
+[14:02:26] Application de diffusion : fin
+[14:05:07] Application de diffusion : initialisation
+[14:05:08] 	Nombre de contrats du jour: 0
+[14:05:18] Application de diffusion : en cours
+[14:05:21] Application de diffusion : fin
+[14:11:58] Application de diffusion : initialisation
+[14:11:58] 	Nombre de contrats du jour: 11
+[14:11:58] 	La vidéo pour le contrat n°14 est introuvable. Contrat reporté.
+[14:11:58] 	La vidéo pour le contrat n°13 est introuvable. Contrat reporté.
+[14:12:01] Application de diffusion : en cours
+[14:12:07] Application de diffusion : fin
+[14:39:36] Application de diffusion : initialisation
+[14:39:36] 	Nombre de contrats du jour: 9
+[14:39:41] Application de diffusion : en cours
+[14:41:02] Application de diffusion : fin
+[14:41:17] Application de diffusion : initialisation
+[14:41:17] 	Nombre de contrats du jour: 9
+[14:41:19] Application de diffusion : en cours
+[14:47:28] Application de diffusion : fin

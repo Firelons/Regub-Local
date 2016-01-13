@@ -1,0 +1,45 @@
+[11:09:14] Application de diffusion : initialisation
+[11:09:14] 	Nombre de contrats du jour: 9
+[11:09:22] Application de diffusion : en cours
+[11:09:23] Application de diffusion : fin
+[13:42:08] Application de diffusion : initialisation
+[13:42:09] 	Nombre de contrats du jour: 9
+[13:42:23] Application de diffusion : en cours
+[13:44:07] Application de diffusion : fin
+[14:35:03] Application de diffusion : initialisation
+[14:35:03] 	Nombre de contrats du jour: 9
+[14:35:03] 	La vidéo pour le contrat n°3 est introuvable. Contrat reporté.
+[14:35:03] 	La vidéo pour le contrat n°23 est introuvable. Contrat reporté.
+[14:35:03] 	La vidéo pour le contrat n°22 est introuvable. Contrat reporté.
+[14:35:03] 	La vidéo pour le contrat n°21 est introuvable. Contrat reporté.
+[14:35:03] 	La vidéo pour le contrat n°18 est introuvable. Contrat reporté.
+[14:35:03] 	La vidéo pour le contrat n°17 est introuvable. Contrat reporté.
+[14:35:03] 	La vidéo pour le contrat n°15 est introuvable. Contrat reporté.
+[14:35:03] 	La vidéo pour le contrat n°24 est introuvable. Contrat reporté.
+[14:35:03] 	La vidéo pour le contrat n°9 est introuvable. Contrat reporté.
+[14:35:05] Application de diffusion : en cours
+[14:35:07] Application de diffusion : fin
+[14:56:55] Application de diffusion : initialisation
+[14:56:55] 	Nombre de contrats du jour: 0
+[14:57:00] Application de diffusion : en cours
+[14:57:15] Application de diffusion : fin
+[15:04:32] Application de diffusion : initialisation
+[15:04:32] 	Nombre de contrats du jour: 12
+[15:04:35] Application de diffusion : en cours
+[15:04:43] Application de diffusion : fin
+[15:05:33] Application de diffusion : initialisation
+[15:05:33] 	Nombre de contrats du jour: 0
+[15:05:35] Application de diffusion : en cours
+[15:05:36] Application de diffusion : fin
+[15:11:54] Application de diffusion : initialisation
+[15:11:55] 	Nombre de contrats du jour: 12
+[15:11:59] Application de diffusion : en cours
+[15:12:01] Application de diffusion : fin
+[15:16:05] Application de diffusion : initialisation
+[15:16:05] 	Nombre de contrats du jour: 12
+[15:16:10] Application de diffusion : en cours
+[15:17:09] Application de diffusion : fin
+[15:17:11] Application de diffusion : initialisation
+[15:17:11] 	Nombre de contrats du jour: 12
+[15:17:15] Application de diffusion : en cours
+[15:19:09] Application de diffusion : fin
